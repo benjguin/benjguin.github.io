@@ -2,7 +2,7 @@
 
 ##latest articles
 
-- stay tuned!
+- [SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI](2015/11/27a/sqldw-azureml-jupyter-powerbi.html)
 
 ##about
 
