@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>index</title>
+<title>different-flavors-of-hadoop</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
 /* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
@@ -470,18 +470,94 @@ vertical-align:1px;
 </head>
 <body>
 <h1 id="-benjamin-guineberti-re-s-blog-http-blog-3-4-fr-benjguin-"><a href="http://blog.3-4.fr">Benjamin Guinebertière&#39;s blog</a> (@benjguin)</h1>
-<h2 id="latest-articles">latest articles</h2>
+<h2 id="different-flavors-of-hadoop-spark">Different flavors of Hadoop &amp; Spark</h2>
+<p>There are four main ways to install Hadoop &amp; Spark: </p>
 <ul>
-<li><a href="/2015/12/02a/different-flavors-of-hadoop.html">Different flavors of Hadoop &amp; Spark</a></li><li><p><a href="/2015/12/02b/mapr-on-azure.html">MapR on Azure</a></p>
-</li><li><p>2015-11</p>
+<li>from Apache (<a href="http://hadoop.apache.org/releases.html">http://hadoop.apache.org/releases.html</a>) </li><li>from Cloudera&#39;s distribution (<a href="http://www.cloudera.com">http://www.cloudera.com</a>)</li><li>from HortonWorks&#39; distribution (<a href="http://hortonworks.com">http://hortonworks.com</a>)</li><li>from MapR&#39;s distribution (<a href="http://mapr.com">http://mapr.com</a>)</li></ul>
+<p>This blog post shows the different options in the context of Azure.</p>
+<h3 id="from-apache-http-hadoop-apache-org-releases-html-">From Apache (<a href="http://hadoop.apache.org/releases.html">http://hadoop.apache.org/releases.html</a>)</h3>
+<p>This option is chosen by people who want to select the components themselves, and want to get the releases as soon as they are available.  </p>
+<p>If you want that option, it&#39;s probably because your want to have control, rather than using a cluster somebody tailored for you.<br>The recommended way to do in Azure is to use Azure Virtual Machines, virtual network, and install everything yourself.<br>For that, you may want to leverage <a href="https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/">Azure Resource Manager templates</a>. A number of examples are available on <a href="https://github.com/Azure/azure-quickstart-template">GitHub</a>. For instance, <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/zookeeper-cluster-ubuntu-vm">this one</a> deploys a Zookeeper cluster on Ubuntu VMs.</p>
+<h3 id="hadoop-architecture-on-azure">Hadoop architecture on Azure</h3>
+<p>There are several ways to deploy a Hadoop cluster on Azure, and several ways to store the data.<br>A virtual machine on Azure has </p>
 <ul>
-<li><a href="2015/11/27a/sqldw-azureml-jupyter-powerbi.html">SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI</a></li></ul>
-</li></ul>
-<h2 id="about">about</h2>
-<p>This blog may contain articles in English or French.</p>
-<p>Older blog is available at <a href="http://blogs.msdn.com/benjguin">http://blogs.msdn.com/benjguin</a></p>
-<p>You can reach me at <a href="http://twitter.com/@benjguin">@benjguin</a>.<br>Other contact endpoints at <a href="http://3-4.fr">http://3-4.fr</a>.</p>
-<p>I am a Technical Evangelist with Microsoft France. My focus is Big Data / Machine Learning on Azure.</p>
+<li>local disk which is mainly used for cache (Cache disk), </li><li>Virtual Hard Disks (VHD) that live in the Azure storage; in particular, this is the case of the OS disk (the only exception is with web and worker roles)</li><li>the virtual machine can also access blob storage which is a storage service where one can put files. It is accessible thru REST API, but also thru the wasb (Windows Azure Storage Blob) driver which is available in Hadoop.</li></ul>
+<p><img src="img/2.png" alt=""></p>
+<p>Data Lake Store is also a new way of storing big data. For now (NOV 2015) it is in preview and can be used from Data Lake Analytics and HDInsight; later on, it will also be usable from standard distributions:</p>
+<p><img src="img/3.png" alt=""></p>
+<h3 id="comparing-cloudera-hortonworks-and-mapr">Comparing Cloudera, Hortonworks and MapR</h3>
+<p><a href="https://www.bing.com/search?q=hortonworks+and+cloudera+and+mapr">Many articles</a> have been written on how the distributions compare.</p>
+<p>Here is how I see them.</p>
+<p><strong>Hortonworks</strong> is the closest to the Apache Hadoop distribution; All their code is Apache&#39;s code and 100% open source. Hortonworks Data Platform (HDP) is described <a href="http://hortonworks.com/hdp/whats-new/">here</a>.</p>
+<p><strong>Cloudera</strong> is the mots popular; in particular, users like <a href="http://www.cloudera.com/content/www/en-us/products/apache-hadoop/impala.html">Impala</a> and <a href="http://www.cloudera.com/content/www/en-us/products/cloudera-manager.html">Cloudera Manager</a>. Their code is 100% open source, but not 100% Apache code (yet?). They recently decided to donate Impala and Kudu to the Apache Software Foundation.</p>
+<p><strong>MapR</strong> builds a distribution for business critical production applications; they are well known for their MapR file system (MapR-FS) which can be viewed as HDFS (Hadoop Distributed File System) and NFS (Network File System), and has the reputation of being fast. Mapr-FS is proprietary. The distribution is described <a href="https://www.mapr.com/products/mapr-distribution-including-apache-hadoop">here</a>.</p>
+<p>Anyway, the best solution is the one you chose!</p>
+<p>Here is how those distribution leverage Azure. They have different approaches.</p>
+<table>
+<thead>
+<tr>
+<th>Distribution</th>
+<th>uses Cache Disk</th>
+<th>uses VHD</th>
+<th>uses blobs</th>
+<th>prices</th>
+<th>options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cloudera</td>
+<td>Yes</td>
+<td>Yes, premium storage only</td>
+<td>for cold archive only</td>
+<td>high only because Cloudera supports only high end performances</td>
+<td>Cluster, single VM</td>
+</tr>
+<tr>
+<td>Hortonworks</td>
+<td>not by default (HDFS)</td>
+<td>Yes (HDFS)</td>
+<td>Yes</td>
+<td>low to high</td>
+<td>Cluster, single VM, Hadoop as a service (HDInsight)</td>
+</tr>
+<tr>
+<td>MapR</td>
+<td>Yes (Mapr-FS)</td>
+<td>Yes (Mapr-FS)</td>
+<td>No. wasb driver is not installed</td>
+<td>low to high</td>
+<td>Cluster</td>
+</tr>
+</tbody>
+</table>
+<p>NB: the options mentioned above are automated ones. Of course, you can leverage Azure virtual machines and virtual networks to install any distribution you like on a single VM or on a cluster. </p>
+<p>The fact that Cloudera only supports blob storage as a cold archive makes it more difficult to create different clusters on the same storage. It also requires that you save the data to blob storage explicitely before shutting down if you need to access the data while the cluster is off.</p>
+<p>With MapR, as you don&#39;t have the wasb driver, it is difficult to make the data available while the cluster is shut down.</p>
+<p>With Hortonworks, you can use Azure blob storage as the default distributed file system. With that, you can start the cluster only when you need compute power. The rest of the time, you can bring data to the storage thru REST API, or SDKs in different languages. When you need compute, you can create a cluster that has the required size. You loose collocality (which is mainly important in the first map phase, before shuffle), but you win a lot of flexibility. </p>
+<p>I hope that MapR and Cloudera will enhance their usage of cloud storage with Azure Data Lake Store. Azure Data Lake should meet the performance requirements of Cloudera so that they don&#39;t use it only for cold archive. I&#39;m quite confident that Hortonworks will add Azure Data Lake driver. This is already the case with HDInsight. </p>
+<p>Let now see how you can deploy those distributions on Azure.</p>
+<h3 id="cloudera-http-www-cloudera-com-">Cloudera (<a href="http://www.cloudera.com">http://www.cloudera.com</a>)</h3>
+<p>There are different options. This <a href="http://www.cloudera.com/content/dam/cloudera/Resources/PDF/Datasheet/datasheet-cloudera-enterprise.pdf">page</a> from Cloudera&#39;s web site show the different available distributions. From Azure marketplace, you can find the following (as of 2 DEC 2015):</p>
+<p><img src="img/4.png" alt=""></p>
+<p>An automated way of deploying a <strong>Cloudera Enterprise Data Hub cluster</strong> <a href="https://azure.microsoft.com/en-us/marketplace/partners/cloudera/clouderaedhcloudera/">has been made available by Cloudera on Azure</a>. </p>
+<p><img src="img/1.png" alt=""></p>
+<p>You&#39;ll find a <a href="https://azure.microsoft.com/en-us/blog/full-cloudera-enterprise-edh-support-on-azure/">blog post</a> on how to deploy it on the Azure web site. Also make sure to read the last paragraph (Cloudera Enterprise Deployment from GitHub) which explains there is also a <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/cloudera-on-centos">template on GitHub</a> if you need more flexibility.</p>
+<p>If you prefer to install <strong>a single VM</strong>, you can use the Cloudera-Centos-6.6 offer. Its documentation is available at <a href="https://azure.microsoft.com/en-us/marketplace/partners/cloudera/cloudera-centos-6/">azure.microsoft.com/en-us/marketplace/partners/cloudera/cloudera-centos-6/</a>.</p>
+<h3 id="hortonworks-http-hortonworks-com-">HortonWorks (<a href="http://hortonworks.com">http://hortonworks.com</a>)</h3>
+<p>In order to install <strong>Hadoop as a service</strong> with an Hadoop Data Platform, you can leverage HDInsight on Windows or Linux nodes. Documentation is available at <a href="https://azure.microsoft.com/en-us/documentation/services/hdinsight/">azure.microsoft.com/en-us/documentation/services/hdinsight/</a>.</p>
+<p>Besides HDInsight, the marketplace has other options: </p>
+<p><img src="img/5.png" alt=""></p>
+<p>In order to install an <strong>HDP cluster</strong>, you can leverage the wizzard. Note that as of today (2 DEC 2015), the wizzard deploys HDP 2.1, while latest version of HDP is 2.3. An updated version of this wizzard should be made available in the coming weeks, hopefully. If you want to have an early look at this, I think this is on Github: <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/hortonworks-on-centos">github.com/Azure/azure-quickstart-templates/tree/master/hortonworks-on-centos</a>.</p>
+<p>If you want to install <strong>a single VM</strong>, a sandbox is available. If you can read French or if you know how to have the page translated for you, you are welcome to read my previous post: <a href="http://blogs.msdn.com/b/benjguin/archive/2015/11/16/hadoop-comment-r-233-duire-ses-co-251-ts-hdinsight-pour-le-d-233-veloppement.aspx">Hadoop : Comment réduire ses coûts HDInsight pour le développement</a></p>
+<h3 id="mapr-http-mapr-com-">MapR (<a href="http://mapr.com">http://mapr.com</a>)</h3>
+<p>MapR is also available on the Azure marketplace: </p>
+<p><img src="img/6.png" alt=""></p>
+<p>In order to install the cluster, please see <a href="/2015/12/02b/mapr-on-azure.html">this blog post</a></p>
+<h3 id="conclusion">Conclusion</h3>
+<p>We saw that there are a number of options to install Hadoop on Azure. </p>
+<p>Want to comment? I&#39;m sorry, I didn&#39;t leverage a tool like Disqus yet on this blog. Please feel free to e-mail me at my twitter alias at microsoft dot com and I&#39;ll include your remarks in the body of this post. </p>
+<p>:-)<br>Benjamin (<a href="http://twitter.com/@benjguin">@benjguin</a>) </p>
 
 </body>
 </html>
