@@ -2,6 +2,8 @@
 
 ##latest articles
 
+- [Azure ML: remove label from web service](/2015/12/18b/azure_ml_remove_label_from_web_service.html)
+
 - [Different flavors of Hadoop & Spark](/2015/12/02a/different-flavors-of-hadoop.html)
 - [MapR on Azure](/2015/12/02b/mapr-on-azure.html)
 
