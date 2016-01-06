@@ -2,7 +2,7 @@
 
 ![](img/benjguin-1502.jpg)
 
-Benjamin works with startups and companies of different sizes to help them technically adopt Microsoft Azure cloud, should they use Big Data, Machine Learning or other technologies. He also speaks at conferences, writes (blogs, …) and takes feedback.
+Benjamin Guinebertière is a Technical Evangelist @ Microsoft France. He works with startups and companies of different sizes to help them technically adopt Microsoft Azure cloud, should they use Big Data, Machine Learning or other technologies. He also speaks at conferences, writes (blogs, …) and takes feedback.
 
 You can reach him at:
 
@@ -19,7 +19,9 @@ You can reach him at:
 - [slideshare](http://www.slideshare.net/benjguin)
 - [Big Data Hebdo (podcast)](http://bigdatahebdo.com)
 
-<div id='tweets'>
-<a class="twitter-timeline"  href="https://twitter.com/benjguin"  data-widget-id="425754375118540800">Tweets by @benjguin</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div>
+<a class="twitter-timeline"  href="https://twitter.com/benjguin" data-widget-id="425754375118540800">Tweets by @benjguin</a>
+<script src="twitter-timeline.js">
+</script>
+
 </div>
