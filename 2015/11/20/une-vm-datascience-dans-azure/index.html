@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Une Machine Virtuelle Dans Azure Avec Des Outils De Data Science | Benjamin Guinebertière&#39;s blog (@benjguin)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Une machine virtuelle dans Azure avec des outils de data scienceMicrosoft a mis à disposition récemment un modèle de machine virtuelle avec un ensemble d’outils utiles en data science. On peut créer c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Une Machine Virtuelle Dans Azure Avec Des Outils De Data Science">
+<meta property="og:url" content="http://blog.3-4.fr/2015/11/20/une-vm-datascience-dans-azure/index.html">
+<meta property="og:site_name" content="Benjamin Guinebertière's blog (@benjguin)">
+<meta property="og:description" content="Une machine virtuelle dans Azure avec des outils de data scienceMicrosoft a mis à disposition récemment un modèle de machine virtuelle avec un ensemble d’outils utiles en data science. On peut créer c">
+<meta property="og:image" content="http://blog.3-4.fr/images/151120a/1.png">
+<meta property="og:image" content="http://blog.3-4.fr/images/151120a/2.png">
+<meta property="og:image" content="http://blog.3-4.fr/images/151120a/3.png">
+<meta property="og:image" content="http://blog.3-4.fr/images/151120a/4.png">
+<meta property="og:image" content="http://blog.3-4.fr/images/151120a/5.png">
+<meta property="og:image" content="http://blog.3-4.fr/images/151120a/6.png">
+<meta property="og:updated_time" content="2016-07-06T12:12:27.343Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Une Machine Virtuelle Dans Azure Avec Des Outils De Data Science">
+<meta name="twitter:description" content="Une machine virtuelle dans Azure avec des outils de data scienceMicrosoft a mis à disposition récemment un modèle de machine virtuelle avec un ensemble d’outils utiles en data science. On peut créer c">
+<meta name="twitter:image" content="http://blog.3-4.fr/images/151120a/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Benjamin Guinebertière&#39;s blog (@benjguin)" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script type='text/javascript' src='/js/tag.js'></script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Benjamin Guinebertière&#39;s blog (@benjguin)</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.3-4.fr"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2015/11/20/une-vm-datascience-dans-azure" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/20/une-vm-datascience-dans-azure/" class="article-date">
+  <time datetime="2015-11-19T23:00:00.000Z" itemprop="datePublished">2015-11-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Une Machine Virtuelle Dans Azure Avec Des Outils De Data Science
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Une-machine-virtuelle-dans-Azure-avec-des-outils-de-data-science"><a href="#Une-machine-virtuelle-dans-Azure-avec-des-outils-de-data-science" class="headerlink" title="Une machine virtuelle dans Azure avec des outils de data science"></a>Une machine virtuelle dans Azure avec des outils de data science</h2><p>Microsoft a <a href="https://social.msdn.microsoft.com/Forums/azure/en-US/home?forum=MachineLearning&amp;announcementId=7edd436b-93e2-4e61-84fb-ba3966d4092d" target="_blank" rel="external">mis à disposition récemment</a> un modèle de machine virtuelle avec un ensemble d’outils utiles en data science. On peut créer cette machine virtuelle depuis la marketplace Azure. Il existe d’autres VM sur le même thème, comme vous pouvez le voir en allant à <a href="https://azure.microsoft.com/en-us/marketplace/?term=data+science" target="_blank" rel="external">https://azure.microsoft.com/en-us/marketplace/?term=data+science</a>:</p>
+<p><img src="/images/151120a/1.png" alt=""></p>
+<p>Penchons-nous plus spécifiquement sur la machine virtuelle “Standard Data Science VM” de Microsoft. Elle comprend les outils suivants:<br>Revolution R Open, une distribution Anaconda Python incluant Jupyter notebook server, Visual Studio Community Edition, Power BI Desktop, SQL Server Express edition et le SDK Azure.</p>
+<p>Pour créer votre propre VM à partir de ce modèle, voici comment procéder. </p>
+<p>Depuis la <a href="https://azure.microsoft.com/en-us/marketplace/partners/microsoft-ads/standard-data-science-vm/" target="_blank" rel="external">page de présentation de la VM</a>, il vous suffit de cliquer sur le bouton “Create Virtual Machine&gt;”, ce qui vous amène dans <a href="https://portal.azure.com/#create/microsoft-ads.standard-data-science-vmstandard-data-science-vm" target="_blank" rel="external">la page de création dans le portail</a>.</p>
+<p>NB: Depuis le portail, on peut aussi chercher cette VM:<br><img src="/images/151120a/2.png" alt=""></p>
+<p>On arrive donc sur cette page de description qui permet de créer la machine virtuelle:<br><img src="/images/151120a/3.png" alt=""></p>
+<p>Vous remplissez ensuite les différentes rubriques.<br><img src="/images/151120a/4.png" alt=""></p>
+<p>Voici quelques éléments notables: </p>
+<ul>
+<li>Basics<ul>
+<li>Vous ne pouvez mettre qu’un mot de passe, pas de clef SSH, car la VM est sous Windows et que Windows ne supporte pas encore SSH. </li>
+<li>Location: Si vous travaillez depuis la France, je vous recommande North Europe ou West Europe.</li>
+</ul>
+</li>
+<li>Size<ul>
+<li>Quelques tailles recommandées sont proposées. Regardez aussi “View All” pour voir s’il n’y a pas des rapports qualité/prix qui vous intéressent plus.  </li>
+</ul>
+</li>
+<li>Settings: <ul>
+<li>Storage account. Pour les utilisateurs habituels d’Azure, si vous avez déjà des comptes de stockage, seuls ceux qui apparaissent dans la rubrique “storage account” peuvent être utilisés ici. Ceux dans la rubrique “storage accounts (classic)” ne sont pas utilisables pour héberger le disque VHD de cette VM que vous créez en mode “Resource Manager”. Voir par exemple <a href="https://channel9.msdn.com/Events/Build/2015/3-618" target="_blank" rel="external">cette session</a> pour plus de détails.</li>
+<li>vous pouvez garder les options par défaut des autres rubriques de cette section</li>
+</ul>
+</li>
+</ul>
+<p>Quand la machine virtuelle a été créée, vous pouvez vous y connecter en cliquant sur le lien suivant dans le portail:</p>
+<p><img src="/images/151120a/5.png" alt=""></p>
+<p>Cela télécharge un fichier .rdp (rdp=remote desktop protocol) que vous pouvez ouvrir ou conserver pour les prochaines connexions.</p>
+<p>Vous pouvez ignorer ce genre de warning<br><img src="/images/151120a/6.png" alt=""><br>et cliquer sur Connect.</p>
+<p>Vous vous connectez avec le compte et le mot de passe que vous avez définis lors de la création de la machine virtuelle.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.3-4.fr/2015/11/20/une-vm-datascience-dans-azure/" data-id="ciqaupb9c0001b0cdxt1djyah" class="article-share-link">Partager</a>
+      
+        <a href="http://blog.3-4.fr/2015/11/20/une-vm-datascience-dans-azure/#disqus_thread" class="article-comment-link">Commentaires</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azure/">Azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Science/">Data Science</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/11/27/sqldw-azureml-jupyter-powerbi/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Science/">Data Science</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Big-Data/" style="font-size: 16.67px;">Big Data</a> <a href="/tags/Data-Science/" style="font-size: 13.33px;">Data Science</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/12/02/mapr-on-azure/">MapR on Azure</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/02/different-flavors-of-hadoop/">Different Flavors of Hadoop &amp; Spark</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/27/sqldw-azureml-jupyter-powerbi/">SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/20/une-vm-datascience-dans-azure/">Une Machine Virtuelle Dans Azure Avec Des Outils De Data Science</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Benjamin Guinebertière<br>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'benjguin-blog34';
+  
+  var disqus_url = 'http://blog.3-4.fr/2015/11/20/une-vm-datascience-dans-azure/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
