@@ -54,6 +54,238 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-2016/09/05/IOT_Hub_Azure_Functions_Sigfox" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/05/IOT_Hub_Azure_Functions_Sigfox/" class="article-date">
+  <time datetime="2016-09-04T22:00:00.000Z" itemprop="datePublished">2016-09-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/05/IOT_Hub_Azure_Functions_Sigfox/">Tutoriel - Synchronisation De Votre Application De Fonction Avec Le Concentrateur IoT Et Exemple De Connexion Avec Un Objet Sigfox</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Ce tutoriel a été rédigé par Eugénie Vinet, stagiaire à la Direction Technique de Microsoft France de avril à août 2016 avec l’aide de son maître de stage Philippe Beraud, Chief Security Advisor à la Direction Technique.<br>Je remercie Eugénie et Philippe pour cette contribution.</p>
+<h2 id="Synchroniser-une-application-de-fonction-avec-un-concentrateur-IoT"><a href="#Synchroniser-une-application-de-fonction-avec-un-concentrateur-IoT" class="headerlink" title="Synchroniser une application de fonction avec un concentrateur IoT"></a>Synchroniser une application de fonction avec un concentrateur IoT</h2><p>Pour créer une application de fonction avec Azure Function App, procédez comme suit :</p>
+<p>1/    Connectez-vous au portail d’Azure à l’adresse <a href="https://portal.azure.com" target="_blank" rel="external">https://portal.azure.com</a>  </p>
+<p>2/    Cliquez sur <strong>New</strong> en haut à gauche et cherchez Function App. </p>
+<p><img src="/images/160905a/img1.png" alt=""></p>
+<p>3/     Cliquez sur <strong>create</strong>. Entrez ensuite un nom, lié le à un de vos groupes de ressources existants (ou à défaut créez-en un nouveau). Si vous voulez que votre application de fonction fonctionne en continu, choisissez un plan de service B1 associé au minimum.<br>Le portail <strong>Function App</strong> s’affiche</p>
+<p><img src="/images/160905a/img2.png" alt=""></p>
+<p>4/    Cliquez sur <strong>Or create your own custom function en bas. </strong>Une liste des modèles disponibles s’affiche pour votre application de fonction.<br><img src="/images/160905a/img3.png" alt=""></p>
+<p>5/    Selon votre choix de programmation (C# ou Node) cliquez sur <strong>EventHubTrigger – C#</strong> ou <strong>EventHubTrigger – Node</strong>.<br>Azure Function App propose de déclencher une fonction à partir d’un événement dans un concentrateur d’événements, mais pas dans un contrateur IOT; cependant, un concentrateur IOT peut être vu comme un concentrateur d’événements. C’est ce que nous allons faire. </p>
+<p>6/    Précisez le nom de votre application de fonction et configurez la connexion avec votre concentrateur IoT dans <strong>Event Hub connection</strong>.<br><img src="/images/160905a/img4.png" alt=""></p>
+<p>Pour connaître le nom et la chaîne de connexion du concentrateur IoT :</p>
+<p>a.    Rendez-vous dans les paramètres de votre concentrateur IoT puis cliquez sur <strong>Messaging</strong>. </p>
+<p>b.    Notez la valeur de <strong>Event-Hub compatible name</strong> (par exemple DecodeSigfoxHub dans notre illustration) ainsi que celle de Compatible endpoint.<br><img src="/images/160905a/img5.png" alt=""></p>
+<p>c.    Toujours au niveau de votre concentrateur IoT, allez ensuite dans <strong>Shared Access Policies</strong> et copier la <strong>connection string – primary Key</strong>. Enlevez la partie HostName à la chaine de caractères de manière à ne garder que SharedAccessKeyName et SharedAccessKey.  Vous obtenez par exemple :<br><code>SharedAccessKeyName=iothubowner;SharedAccessKey=MrsSPDzU5=8g2gZZPKXOJ9EJ5RDlo2PVzmPuGniLRwQ=</code></p>
+<p>d.    Retournez dans la fenêtre de votre application de fonction - ne fermez pas la fenêtre de paramètres de votre concentrateur IoT, vous en aurez besoin plus tard -. Nommez votre application de fonction comme bon vous semble :)</p>
+<p>e.    Dans <strong>Event Hub Name</strong>, entrez la valeur précédente de Event-Hub compatible name. Attention cependant, il ne supporte que les noms en minuscule. S’il y a des majuscules dans votre valeur de Event hub compatible name, passez tout en minuscule (par exemple decodesigfoxhub dans notre illustration)  </p>
+<p>f.    Cliquez ensuite sur <strong>select</strong> à côté de Event Hub connection. Cliquez ensuite sur<strong> Add a connection</strong> string en haut à droite.<br><img src="/images/160905a/img6.png" alt=""></p>
+<p>g.    Dans <strong>Connection name</strong>, spécifiez le nom que vous souhaitez. </p>
+<p>h.    Dans <strong>Connection string</strong>, précisez :<br><code>Endpoint=&lt;CompatibleEndpoint&gt;&lt;SharedAccessKeyName&gt;&lt;SharedAccessKey&gt;</code><br>Vous obtenez une chaine de caractère semblable à :<br><code>Endpoint=sb://iothub-ns-decodesigf-499548662a53f6c.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=MrsSPDzU5=8g2gZZPKXOJ9EJ5RDlo2PVzmPuGniLRwQ=</code></p>
+<p>7/    Validez.<br>Votre application de fonction s’exécutera alors à chaque message reçu par l’utilisateur.<br>Vous pouvez alors modifier les informations que vous recevez de votre concentrateur IoT pour les renvoyer autre part ou les stocker par exemple.<br>Vous trouverez ci-après un exemple concret d’usage d’une application de fonction dans notre contexte, à savoir le décodage de trames Sigfox pour les renvoyer sur la solution préconfigurée de surveillance à distance (Cf. portail associé à l’adresse <a href="https://www.azureiotsuite.com/" target="_blank" rel="external">https://www.azureiotsuite.com/</a>) . </p>
+<h2 id="Exemple-avec-IoT-Suie-Objet-Sigfox"><a href="#Exemple-avec-IoT-Suie-Objet-Sigfox" class="headerlink" title="Exemple avec IoT Suie - Objet Sigfox"></a>Exemple avec IoT Suie - Objet Sigfox</h2><p>Nous vous proposons dans cette section un exemple de projet utilisant Azure Function App avec un concentrateur IoT.<br>La solution préconfigurée de surveillance à distance s’attend recevoir des messages sur son concentrateur IoT de type :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	DeviceId = XX,</div><div class="line">	Humidity = XX,</div><div class="line">	Temperature = XX,</div><div class="line">	ExternalTemperature = XX</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Dans ce projet nous voulons utiliser des objets Sigfox (voir ici <a href="http://makers.sigfox.com/#about" target="_blank" rel="external">http://makers.sigfox.com/#about</a>) qui envoient des trames de type :<br>« 422D17 » avec 42 l’identifiant du type d’objet, 2D l’humidité (45%) et 17 la température (en décimal = 23°C). »<br>On va supposer que l’humidité et la température sont deux entiers qui vont de 0 à 100. </p>
+<h3 id="Prerequis"><a href="#Prerequis" class="headerlink" title="Prérequis"></a>Prérequis</h3><p>Les prérequis sont les suivants :<br>•    Avoir lié un device Sigfox qui envoie des données de température et d’humidité, Cf. tutoriel <a href="http://danvy.tv/push-your-sigfox-devices-data-to-azure-iot-hub/" target="_blank" rel="external">PUSH YOUR SIGFOX DEVICES DATA TO AZURE IOT HUB</a> .</p>
+<p>•    Avoir créé et provisionné une solution préconfigurée de type Solution de surveillance à distance sur le site dédié à l’adresse <a href="http://www.azureiotsuite.com/" target="_blank" rel="external">http://www.azureiotsuite.com/</a>.</p>
+<p>•    Avoir suivi l’étape précédente de synchronisation d’une Function App avec un <strong>concentrateur IoT en utilisant le concentrateur IoT Hub lié à l’objet Sigfox</strong>. </p>
+<p>Si ces prérequis sont satisfaits, les étapes de mise en œuvre sont les suivantes :</p>
+<p>•    Etape 1 – Ajout de l’objet préconfiguré.</p>
+<p>•    Etape 2 – Remplissage du fichier JSON.</p>
+<p>•    Etape 3 – Ajout des paquets.</p>
+<p>•    Etape 4 – Contenu de votre application de fonction.</p>
+<p>Nous les développons dans l’ordre au travers d’une section dédiée propre.</p>
+<h3 id="Etape-1-–-Ajout-de-l’objet-preconfigure"><a href="#Etape-1-–-Ajout-de-l’objet-preconfigure" class="headerlink" title="Etape 1 – Ajout de l’objet préconfiguré"></a>Etape 1 – Ajout de l’objet préconfiguré</h3><p>Pour ajouter un objet, procédez comme suit :</p>
+<ol>
+<li>Rendez-vous à présent sur l’environnement de démonstration iotmsfrance à l’adresse <a href="https://www.azureiotsuite.com/" target="_blank" rel="external">https://www.azureiotsuite.com/</a>. </li>
+<li>Connectez-vous avec votre compte. Comme cela a été indiqué précédemment, vous devez disposer de privilèges d’administration pour pouvoir enregistrer un objet.<br>De plus, réalisez cette étape UNIQUEMENT si l’objet n’apparait pas dans la liste des appareils du concentrateur IoT de l’environnement de démonstration (vous pouvez vérifié via le portail Azure ou via l’application <strong>Device Explorer</strong>). Si votre objet est déjà présent dans la liste, il faudra le supprimer en utilisant le <strong>Device Explorer</strong>.<br>L’application <strong>Device Explorer</strong> est téléchargeable à l’adresse <a href="https://github.com/Azure/azure-iot-sdks/releases" target="_blank" rel="external">https://github.com/Azure/azure-iot-sdks/releases</a>. Le répertoire d’installation par défaut de cette application est :<br>C:\Program Files (x86)\Microsoft\DeviceExplorer</li>
+<li>Une fois sur le site, dans la liste des solutions approvisionnées, sélectionnez la <strong>Solution de surveillance à distance</strong>, c.à.d. la solution <votresolution>.azurewebsite.net.</votresolution></li>
+<li>Cliquez en bas à gauche sur <strong>Ajouter un appareil</strong> (ou Add a device en anglais).<br><img src="/images/160905a/img7.png" alt=""><br>L’étape 1 d’ajout d’un appareil s’affiche.<br><img src="/images/160905a/img8.png" alt=""></li>
+<li>Dans le cadre <strong>Appareil personnalisé</strong>, sélectionnez <strong>Ajouter un nouveau</strong>. L’étape 2 s’affiche.<br><img src="/images/160905a/img9.png" alt=""></li>
+<li>Sélectionnez l’option <strong>Me laisser définir mon propre ID d’appareil</strong> et donnez lui le même ID que dans Sigfox /!\ ça ne marchera pas si vous choisissez un id différent.  </li>
+<li>Cliquez sur <strong>Vérifier l’ID</strong>. L’ID doit être disponible. </li>
+<li>Cliquez enfin sur <strong>Créer</strong>.<br>A ce stade, l’objet n’est pas activé dans la plateforme. Il va falloir modifier les informations relatives à l’objet dans la base NoSQL DocumentDB. Pour cela, connectez-vous au portail d’Azure à l’adresse <a href="https://portal.azure.com" target="_blank" rel="external">https://portal.azure.com</a>  et réalisez l’étape suivante.  </li>
+</ol>
+<h2 id="Etape-2-–-Remplissage-du-fichier-JSON"><a href="#Etape-2-–-Remplissage-du-fichier-JSON" class="headerlink" title="Etape 2 – Remplissage du fichier JSON"></a>Etape 2 – Remplissage du fichier JSON</h2><p>Pour remplir le fichier JSON d’informations lié à l’objet, procédez comme suit :</p>
+<ol>
+<li>Rendez-vous dans la rubrique DocumentDB Accounts sur le portail Azure à l’adresse <a href="https://portal.azure.com" target="_blank" rel="external">https://portal.azure.com</a>.  <img src="/images/160905a/img10.png" alt=""></li>
+<li>Sélectionner le compte DocumentDB du projet :<br><img src="/images/160905a/img11.png" alt=""></li>
+<li>Cliquez ensuite sur votre base de données DevMgmtDb (1). Dans <strong>DevMgmtDB</strong>, cliquez sur <strong>Document Explorer</strong> (2).  <img src="/images/160905a/img12.png" alt=""><br>Vous devriez voir apparaitre une liste comme celle-ci : </li>
+</ol>
+<pre><code>{
+    &quot;DeviceProperties&quot;: {
+    &quot;DeviceID&quot;: &quot;{NomDeVotreDevice}&quot;,
+    &quot;HubEnabledState&quot;: true,
+    &quot;CreatedTime&quot;: &quot;0001-01-01T00:00:00&quot;,
+    &quot;DeviceState&quot;: &quot;normal&quot;,
+    &quot;Manufacturer&quot;: &quot;{Manufacturer}&quot;,
+    &quot;ModelNumber&quot;: &quot;{NomDuModelDuDevice}&quot;,
+    &quot;SerialNumber&quot;: &quot;{NumeroDeSérie}&quot;,
+    &quot;FirmwareVersion&quot;: &quot;{FirmwareVersion}&quot;,
+    &quot;Platform&quot;: &quot;{Plateform}&quot;,
+    &quot;Latitude&quot;: {Longitude} ,
+    &quot;Longitude&quot;: {Latitude},
+    &quot;Processor&quot;: &quot;{processor}&quot;,
+    &quot;InstalledRAM&quot;: &quot;{installedRam}&quot;,
+},
+&quot;SystemProperties&quot;: {
+    &quot;ICCID&quot;: null
+},
+ &quot;Commands&quot;: [
+    {
+      &quot;Name&quot;: &quot;PingDevice&quot;,
+      &quot;Parameters&quot;: null
+    },
+    {
+      &quot;Name&quot;: &quot;StartTelemetry&quot;,
+      &quot;Parameters&quot;: null
+    },
+{
+  &quot;Name&quot;: &quot;StopTelemetry&quot;,
+  &quot;Parameters&quot;: null
+},
+{
+  &quot;Name&quot;: &quot;ChangeSetPointTemp&quot;,
+  &quot;Parameters&quot;: [
+    {
+      &quot;Name&quot;: &quot;SetPointTemp&quot;,
+      &quot;Type&quot;: &quot;double&quot;
+    }
+  ]
+},
+{
+  &quot;Name&quot;: &quot;DiagnosticTelemetry&quot;,
+  &quot;Parameters&quot;: [
+    {
+      &quot;Name&quot;: &quot;Active&quot;,
+      &quot;Type&quot;: &quot;boolean&quot;
+    }
+  ]
+},
+{
+  &quot;Name&quot;: &quot;ChangeDeviceState&quot;,
+  &quot;Parameters&quot;: [
+    {
+      &quot;Name&quot;: &quot;DeviceState&quot;,
+      &quot;Type&quot;: &quot;string&quot;
+    }
+  ]
+}
+],
+&quot;CommandHistory&quot;: [],
+&quot;IsSimulatedDevice&quot;: 0,
+ &quot;id&quot;: &quot;&quot;,
+ &quot;Telemetry&quot;: [
+    {
+  &quot;Name&quot;: &quot;Temperature&quot;,
+  &quot;DisplayName&quot;: &quot;Temperature&quot;,
+  &quot;Type&quot;: &quot;double&quot;
+},
+{
+  &quot;Name&quot;: &quot;Humidity&quot;,
+  &quot;DisplayName&quot;: &quot;Humidity&quot;,
+  &quot;Type&quot;: &quot;double&quot;
+}
+],
+ &quot;Version&quot;: &quot;1.0&quot;,
+ &quot;ObjectType&quot;: &quot;DeviceInfo&quot;
+ }
+}
+</code></pre><p>Si vous n’avez pas réalisé l’étape 3 si l’objet existait déjà dans le concentrateur IoT, il est possible qu’il n’y ait aucun fichier relatif à l’objet dans la base de données. Il va alors falloir en créer un en cliquant en haut à gauche.<br>Par contre si vous aviez réalisé l’étape 3, le fichier relatif au device devrait se trouver dans la liste. Il devrait avoir un nom de type « 2f23278e-0e82-4850-86f5-b5c3f83a8850 » ou bien le nom du device comme « BFFBA ».  Pour vérifier si un fichier est lié à votre objet, il suffit de l’ouvrir et de lire le DeviceID. Il doit être identique à l’ID que vous avez enregistré sur la page web de la solution de surveillance à distance et identique à l’ID de l’objet enregistré sur le portail Sigfox. (1)<br>Supprimez ou modifiez le contenu du fichier dont le DeviceID est le nom de votre objet et recopier le texte à droite puis complétez/modifiez les zones en jaune comme suit :</p>
+<pre><code>    HubEnabledState : doit être passé à true.
+    DeviceState : doit être normal. 
+    CreatedTime : doit être de la forme : AAAA-MM-JJThh:mm:ss 
+Avec AAAA l’année, MM le mois, JJ le jour, hh l’heure, mm les minutes et ss les secondes. 
+Il est recommandé de mettre la date et l’heure qu’il est au moment où vous remplissez le fichier mais cela ne va pas avoir d’impact sur le fonctionnement général de la surveillance à distance. 
+    SerialNumber : doit préciser le numéro de série de l’objet si celui en est « équipé ». A défaut, écrivez le nom de l’objet entre guillemets.
+    Manufacturer : doit préciser le nom du fabricant de l’objet entre guillemets.
+    ModelNumber : doit préciser le numéro de modèle de l’objet si celui en est « équipé ». A défaut, écrivez le nom de l’objet entre guillemets
+    FirmwareVersion, Platform, Processor et InstalledRam : si vous ne les connaissez pas pour le device utilisé vous pouvez écrire « None ». 
+    Latitude et Longitude : vous avez le choix de son emplacement. L’objet s’affichera à l’endroit indiqué sur la carte. Vous pouvez vous aider de ce site : http://www.latlong.net/ pour trouver la longitude et la latitude d’un endroit précis. Attention : la longitude et la latitude ne doivent pas être écrites entre guillemets sur le document. 
+    Id : sera l’ID du document que vous avez créé/modifié. Il est recommandé d’utiliser le nom de l’objet afin de retrouver plus facilement le document. 
+</code></pre><h2 id="Etape-3-Ajout-des-paquets"><a href="#Etape-3-Ajout-des-paquets" class="headerlink" title="Etape 3 - Ajout des paquets"></a>Etape 3 - Ajout des paquets</h2><p>Tout d’abord nous allons ajouter les paquets nécessaires à notre application de fonction. Pour ceci, nous allons suivre les étapes pour charger un fichier project.json contenant le nom de tous nos paquets (rubrique Package Management sur le site <a href="https://azure.microsoft.com/en-us/documentation/articles/functions-reference-csharp/" target="_blank" rel="external">https://azure.microsoft.com/en-us/documentation/articles/functions-reference-csharp/</a> et File Update ici <a href="https://azure.microsoft.com/en-us/documentation/articles/functions-reference/#fileupdate" target="_blank" rel="external">https://azure.microsoft.com/en-us/documentation/articles/functions-reference/#fileupdate</a> ).<br>Procédez comme suit :</p>
+<ol>
+<li>Rendez-vous dans les outils de votre application de fonction.<br><img src="/images/160905a/img13.png" alt=""></li>
+<li>Cliquez sur Kudu puis sur accédez. Vous vous retrouvez donc sur le système de gestion des fichiers de votre application de fonction. </li>
+<li>Allez dans Debug Console puis PowerShell. En utilisant la commande ou bien en utilisant l’explorateur de fichier au-dessus rendez-vous sur D:\home\site\wwwroot\<nomdevotreapplicationdefonction>&gt;</nomdevotreapplicationdefonction></li>
+<li><p>Ajoutez alors un fichier project.json qui contient les lignes suivantes - un simple glissé-déposé suffit - :  </p>
+<p>  {<br>  “frameworks”: {<br>  “net46”:{</p>
+<pre><code>&quot;dependencies&quot;: {                                                
+        &quot;Microsoft.Azure.Devices.Client&quot;:&quot;1.0.6&quot;,
+        &quot;Newtonsoft.Json&quot;:&quot;8.0.3&quot;,                
+        &quot;Microsoft.Azure.Devices&quot;:&quot;1.0.6&quot;            
+        }
+    }      
+}
+</code></pre><p>  }</p>
+</li>
+</ol>
+<h2 id="Etape-4-–-Definition-du-contenu-de-votre-application-de-fonction"><a href="#Etape-4-–-Definition-du-contenu-de-votre-application-de-fonction" class="headerlink" title="Etape 4 – Définition du contenu de votre application de fonction"></a>Etape 4 – Définition du contenu de votre application de fonction</h2><p>Pour définir le contenu de votre application de fonction, procédez comme suit :</p>
+<p>1/    Retournez sur votre application de fonction et ajoutez la classe <strong>DataToReceive</strong>. Le contenu dépendra du contenu du JSON entré pour le callback de votre Device Type dans le portail Sigfox.<br>Si vous avez par exemple ce JSON : </p>
+<pre><code>{
+   &quot;device&quot; : &quot;{device}&quot;,
+   &quot;data&quot; : &quot;{data}&quot;,
+   &quot;time&quot; : {time},
+   &quot;snr&quot; : {snr},
+   &quot;station&quot; : &quot;{station}&quot;,
+   &quot;rssi&quot; : {rssi},
+   &quot;seqNumber&quot; : {seqNumber}
+}
+</code></pre><p>Votre classe <strong>DataToReceive</strong> doit ressembler à cela : </p>
+<pre><code>public class DataToReceive
+{
+    public string device { get; set; }
+    public string data { get; set; }
+    public double time { get; set; }
+    public string seqNumber { get; set; }
+    public string rssi { get; set; }
+    public string snr { get; set; }
+    public string station { get; set; }
+}
+</code></pre><p>Il faut qu’il y ait au minimum les variables « device » et « data ». </p>
+<p>2/    Créer ensuite une classe <strong>DataToSend</strong> qui réunira les informations que vous voulez envoyer dans votre solution préconfigurée de surveillance à distance. Nous envoyons ici que l’Id de l’objet, la température et l’humidité. Vous pouvez ajouter le paramètre <strong>External Température</strong>. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class DataToSend</div><div class="line">&#123;</div><div class="line">    public string DeviceId &#123; get; set; &#125;</div><div class="line">    public double Humidity &#123; get; set; &#125;</div><div class="line">    public double Temperature &#123; get; set; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3/    Créez la classe <strong>SendToIotHub</strong> comme suit. Remplacez bien les valeurs de <strong>connectionString</strong> et d’<strong>iotHubUri</strong> par les éléments relatifs au concentrateur IoT de la solution préconfigurée.  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">public class SendToIotHub</div><div class="line">&#123;</div><div class="line">    DeviceClient deviceClient;</div><div class="line">    Device device;</div><div class="line">    string jsonMessageToSend;</div><div class="line">    string connectionString = &quot;&#123;IotHubConnexionString&#125;&quot;;</div><div class="line">    string iotHubUri = &quot;&#123;IotHubName&#125;.azure-devices.net&quot;;</div><div class="line"></div><div class="line">    public async void sendData(DataToSend data, TraceWriter log)</div><div class="line">    &#123;</div><div class="line">        RegistryManager registryManager = RegistryManager.CreateFromConnectionString(connectionString);</div><div class="line">        device = new Device(data.DeviceId);</div><div class="line">        device = await AddDeviceAsync1(data.DeviceId, registryManager);</div><div class="line">        deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(data.DeviceId,device.Authentication.SymmetricKey.PrimaryKey.ToString()));</div><div class="line">       jsonMessageToSend = JsonConvert.SerializeObject(data);</div><div class="line">        var messageToSend = new Microsoft.Azure.Devices.Client.Message(System.Text.Encoding.ASCII.GetBytes(jsonMessageToSend));</div><div class="line"></div><div class="line">        deviceClient.SendEventAsync(messageToSend);</div><div class="line">        log.Info($&quot;C# Event Hub trigger function processed a message: &#123;jsonMessageToSend&#125;&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">        private async Task&lt;Device&gt; AddDeviceAsync1(string deviceId, RegistryManager registryManager)</div><div class="line">        &#123;</div><div class="line">            Device device;</div><div class="line">            try</div><div class="line">            &#123;</div><div class="line">                device = await registryManager.AddDeviceAsync(new Device(deviceId));</div><div class="line">    </div><div class="line">            &#125;</div><div class="line">            catch (DeviceAlreadyExistsException)</div><div class="line">            &#123;</div><div class="line">                device = await registryManager.GetDeviceAsync(deviceId);</div><div class="line">            &#125;</div><div class="line">            return device;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>4/    Ajoutez les directives using « de circonstance » au début de votre application de fonction :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">using Microsoft.Azure.Devices;</div><div class="line">using Microsoft.Azure.Devices.Client;</div><div class="line">using System;</div><div class="line">using Microsoft.Azure.Devices.Common.Exceptions;</div><div class="line">using Newtonsoft.Json;</div></pre></td></tr></table></figure>
+<p>5/    Complétez maintenant la méthode <strong>Run</strong> : </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public static void Run(string myEventHubMessage, TraceWriter log)</div><div class="line">&#123;</div><div class="line">    log.Info($&quot;C# Event Hub trigger function processed a message: &#123;myEventHubMessage&#125;&quot;);</div><div class="line"></div><div class="line">    DataToReceive receivedData = new DataToReceive();</div><div class="line">    DataToSend sentData = new DataToSend();</div><div class="line">    SendToIotHub sendDataToIotHub = new SendToIotHub();</div><div class="line">    receivedData = JsonConvert.DeserializeObject&lt;DataToReceive&gt;(myEventHubMessage);</div><div class="line"></div><div class="line">    if (receivedData.data != null &amp;&amp; receivedData.data.Substring(0, 2) == &quot;42&quot;)</div><div class="line">    &#123;</div><div class="line">            string data = receivedData.data;</div><div class="line">            sentData.Humidity = Convert.ToInt32(data.Substring(2, 2), 16);</div><div class="line">            sentData.Temperature = Convert.ToInt32(data.Substring(4, 2), 16);</div><div class="line">            sentData.DeviceId = receivedData.device;</div><div class="line">            sendDataToIotHub.sendData(sentData, log);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Vous obtiendrez quelque chose de similaire à la capture qui suit si tout va bien :</p>
+<p><img src="/images/160905a/img14.png" alt=""></p>
+<p>Vous devriez voir dans les logs les messages reçus et envoyés si vous gardez les lignes de code <code>log.info (…..)</code>. </p>
+<p>Bien sûr, nous partons du principe que les trames à utiliser sont de la forme <strong>« 422D17 »</strong> (comme développé précédemment) mais il est possible que vous ayez à faire des calculs sur chaque élément de votre trame pour obtenir les valeurs décimales renvoyées par vos capteurs. Pour ceci, renseignez-vous auprès du constructeur de l’objet.  </p>
+<p>Et voilà !<br>Ceci conclut ce tutoriel.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.3-4.fr/2016/09/05/IOT_Hub_Azure_Functions_Sigfox/" data-id="cispuveyn0000nscdr86d7mej" class="article-share-link">Share</a>
+      
+        <a href="http://blog.3-4.fr/2016/09/05/IOT_Hub_Azure_Functions_Sigfox/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azure/">Azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AzureFunctions/">AzureFunctions</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IoT/">IoT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sigfox/">Sigfox</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-2016/08/30/deploying_containers_to_one_or_several_VMs" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/08/30/deploying_containers_to_one_or_several_VMs/" class="article-date">
@@ -379,149 +611,6 @@
 
 
   
-    <article id="post-2015/11/27/sqldw-azureml-jupyter-powerbi" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/11/27/sqldw-azureml-jupyter-powerbi/" class="article-date">
-  <time datetime="2015-11-26T23:00:00.000Z" itemprop="datePublished">2015-11-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/27/sqldw-azureml-jupyter-powerbi/">SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>This blog post shows how to load data from blob storage to the following (in order): </p>
-<ul>
-<li>SQL Datawarehouse (SQL DW for short). SQL DW has the following advantages<ul>
-<li>It can scale up and down in a few seconds</li>
-<li>You can load data easily from flat files in Azure Blob with Polybase</li>
-<li>SQL is a well known language</li>
-<li>You can do joins</li>
-<li>You can query it from Azure ML</li>
-</ul>
-</li>
-<li>Azure Machine Learning<ul>
-<li>learn from the dataset</li>
-<li>tune your model</li>
-<li>evaluate scoring and how the model generalize</li>
-<li>operationalize as a Web API</li>
-</ul>
-</li>
-<li>a Jupyter notebook<ul>
-<li>explore, plot, transform the dataset in Python</li>
-<li>document in Markdown</li>
-<li>…</li>
-</ul>
-</li>
-<li>Power BI<ul>
-<li>visualize your data</li>
-<li>Share the dataviz with others</li>
-</ul>
-</li>
-</ul>
-<p>There is also a good article with demo videos in the following article: <a href="https://azure.microsoft.com/en-us/blog/using-azure-machine-learning-with-sql-data-warehouse/" target="_blank" rel="external">Using Azure Machine Learning with SQL Data Warehouse</a>.</p>
-<h2 id="conventions"><a href="#conventions" class="headerlink" title="conventions"></a>conventions</h2><p>This is a sample.<br>By convention, all values ended by 34 should be replaced by your own values. For instance, the data storage account is <code>mydata34</code>. Yours should have a different name.</p>
-<h2 id="the-sample-dataset"><a href="#the-sample-dataset" class="headerlink" title="the sample dataset"></a>the sample dataset</h2><p>The data is available as a number of flat delimited files in a blob storage container. In this example, there are 2 files. here are a few lines of data: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Modules/Orchard.Localization/Styles/orchard-localization-base.css|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|554|15</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|-|site.supersimple.fr|200|0|0|1917|367|203</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Themes/Classic/Styles/Site.css|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|92|520|218</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Core/Shapes/scripts/html5.js|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|517|218</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Core/Shapes/scripts/html5.js|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=2aNXfgccF5TrHacVp9ReeLniHeKovLv/1lYP13EyQ4pYy21MvX4WFH+1Kg9/R+02r4vhkZo0wvOLXZ233O0Sn2QC+n+7EobKV6+7J0lqG0F1g/oc/RCSO3NhrWAoFNzqIEUm0AgJkY0MIhA5XPTX0s0jFLw=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|517|265</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Core/Shapes/scripts/html5.js|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|517|218</div></pre></td></tr></table></figure>
-<p>Fields are separated by the pipe character (‘|’). The name of the fields are: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">date|time|s-sitename|s-computername|s-ip|cs-method|cs-uri-stem|cs-uri-query|s-port|cs-username|c-ip|cs-version|cs(User-Agent)|cs(Cookie)|cs(Referer)|cs-host|sc-status|sc-substatus|sc-win32-status|sc-bytes|cs-bytes|time-taken</div></pre></td></tr></table></figure>
-<p>The data is available in a storage account.<br><img src="/images/151127a/1.png" alt=""></p>
-<p>In this example, the storage account name is <code>mydata34</code> and its key is <code>k2JOuW/nru2nW0y3Icpm9yNTYCrUuNSFm9RDyMuBvIKuYqhtPHAK8MW4bVQfWssXp184pGhlKraaOc7sZTDijQ==</code>.</p>
-<p>The key can be found in the portal, for example:<br><img src="/images/151127a/2.png" alt=""></p>
-<p>NB: by the time your read this page, the key may have change. I share the key so that you can find it in code where it is necessary.</p>
-<h2 id="SQL-Datawarehouse-SQL-DW"><a href="#SQL-Datawarehouse-SQL-DW" class="headerlink" title="SQL Datawarehouse (SQL DW)"></a>SQL Datawarehouse (SQL DW)</h2><p>Let’s create a SQL DW. </p>
-<p><img src="/images/151127a/3.png" alt=""></p>
-<p>choose SQL Data Warehouse and click <code>Create</code>.</p>
-<p>Here is the data you can enter: </p>
-<ul>
-<li>mysqldw34</li>
-<li>200 DWU</li>
-<li>Create a new Server<ul>
-<li>mysqldbsrv34</li>
-<li>admin34</li>
-<li>DDtgjiuz96<em>__</em></li>
-<li>West Europe</li>
-</ul>
-</li>
-</ul>
-<p><img src="/images/151127a/4.png" alt=""></p>
-<p>Once the SQL DW has been created, we must connect to it. One of the tools you can use is Visual Studio; you can download Visual Studio community edition from <a href="https://www.visualstudio.com/" target="_blank" rel="external">visualstudio.com</a>. Please refer to <a href="https://azure.microsoft.com/en-us/documentation/articles/sql-data-warehouse-get-started-connect/" target="_blank" rel="external">Connect to SQL Data Warehouse with Visual Studio</a> for details.</p>
-<p>You must allow your own IP address to access the SQL DB server: </p>
-<p><img src="/images/151127a/5.png" alt=""></p>
-<p>Let’s load the data.<br>Here is the code that you can paste in Visual Studio and execute:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">--also refer to https://azure.microsoft.com/en-us/documentation/articles/sql-data-warehouse-load-with-polybase/</div><div class="line"></div><div class="line"></div><div class="line">-- Create a master key</div><div class="line">CREATE MASTER KEY;</div><div class="line"></div><div class="line">CREATE DATABASE SCOPED CREDENTIAL mydata_secret </div><div class="line">	WITH IDENTITY = &apos;dummy&apos;, </div><div class="line">	Secret = &apos;k2JOuW/nru2nW0y3Icpm9yNTYCrUuNSFm9RDyMuBvIKuYqhtPHAK8MW4bVQfWssXp184pGhlKraaOc7sZTDijQ==&apos;;</div><div class="line"></div><div class="line">SELECT * FROM sys.database_credentials;</div><div class="line"></div><div class="line">CREATE EXTERNAL DATA SOURCE mydata_datasource WITH</div><div class="line">(</div><div class="line">	TYPE=Hadoop, </div><div class="line">	LOCATION=&apos;wasbs://container1@mydata34.blob.core.windows.net&apos;, </div><div class="line">	CREDENTIAL=mydata_secret</div><div class="line">);</div><div class="line"></div><div class="line">CREATE EXTERNAL FILE FORMAT PIPE_fileformat WITH (</div><div class="line">	FORMAT_TYPE = DELIMITEDTEXT,</div><div class="line">	FORMAT_OPTIONS (</div><div class="line">		FIELD_TERMINATOR=&apos;|&apos;)</div><div class="line">);</div><div class="line"></div><div class="line">drop external table mydata_externaltable;</div><div class="line">create external table mydata_externaltable</div><div class="line">(</div><div class="line">	[date] varchar(255), </div><div class="line">	[time] varchar(255), </div><div class="line">	[s-sitename] varchar(255), </div><div class="line">	[s-computername] varchar(255), </div><div class="line">	[s-ip] varchar(255), </div><div class="line">	[cs-method] varchar(255), </div><div class="line">	[cs-uri-stem] varchar(255), </div><div class="line">	[cs-uri-query] varchar(4000), </div><div class="line">	[s-port] varchar(255), </div><div class="line">	[cs-username] varchar(255), </div><div class="line">	[c-ip] varchar(255), </div><div class="line">	[cs-version] varchar(255), </div><div class="line">	[cs(User-Agent)] varchar(255), </div><div class="line">	[cs(Cookie)] varchar(4000), </div><div class="line">	[cs(Referer)] varchar(255), </div><div class="line">	[cs-host] varchar(255), </div><div class="line">	[sc-status] varchar(255), </div><div class="line">	[sc-substatus] varchar(255), </div><div class="line">	[sc-win32-status] varchar(255), </div><div class="line">	[sc-bytes] varchar(255), </div><div class="line">	[cs-bytes] varchar(255), </div><div class="line">	[time-taken] varchar(255)</div><div class="line">)</div><div class="line">WITH (</div><div class="line">	LOCATION=&apos;/flat_files&apos;,</div><div class="line">	DATA_SOURCE = mydata_datasource,</div><div class="line">	FILE_FORMAT = PIPE_fileformat,</div><div class="line">	REJECT_TYPE = percentage,</div><div class="line">	REJECT_VALUE = 90,</div><div class="line">	REJECT_SAMPLE_VALUE = 200</div><div class="line">);</div><div class="line"></div><div class="line"></div><div class="line">-- create table as select: https://azure.microsoft.com/en-us/documentation/articles/sql-data-warehouse-develop-ctas/</div><div class="line">CREATE TABLE [dbo].[mydata]</div><div class="line">WITH</div><div class="line">(</div><div class="line">    DISTRIBUTION = ROUND_ROBIN,</div><div class="line">    CLUSTERED COLUMNSTORE INDEX</div><div class="line">)</div><div class="line">AS</div><div class="line">	SELECT * FROM mydata_externaltable;</div></pre></td></tr></table></figure>
-<p>the result of the last statement is</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">    (44819 row(s) affected)</div><div class="line">    </div><div class="line">Query completed. Rows were rejected while reading from external source(s). </div><div class="line">4 rows rejected from external table [mydata_externaltable] in plan step 5 of query execution:</div><div class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 6, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: #Software:|Microsoft|Internet|Information|Services|7.5 (Tokenization failed), Error: Not enough columns in this line.</div><div class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 2, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: #Version:|1.0 (Tokenization failed), Error: Not enough columns in this line.</div><div class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 3, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: #Date:|2012-01-13|01:59:59 (Tokenization failed), Error: Not enough columns in this line.</div><div class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 21, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: |time-taken (Tokenization failed), Error: Too many columns in the line.</div></pre></td></tr></table></figure>
-<p>each file has ~22000 lines so the total numlber of lines seems good.</p>
-<p>The rejected lines are some headers that are inside regular rows: </p>
-<p><img src="/images/151127a/6.png" alt=""> </p>
-<p>We can now query the data: </p>
-<p><img src="/images/151127a/7.png" alt=""> </p>
-<h2 id="Azure-Machine-Learning"><a href="#Azure-Machine-Learning" class="headerlink" title="Azure Machine Learning"></a>Azure Machine Learning</h2><p>Let’s now get a subset of the data in Azure Machine Learning.<br>For example, the query we need is </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select top 1500 * from mydata WHERE [sc-status]=&apos;200&apos; ORDER BY date, time asc</div></pre></td></tr></table></figure>
-<p>Let’s assume you have an Azure Machine learning available. You’ve created a new experiment from the Studio at <a href="https://studio.azureml.net" target="_blank" rel="external">studio.azureml.net</a>.</p>
-<p>Then add a reader</p>
-<p><img src="/images/151127a/8.png" alt=""> </p>
-<p>In the properties, choose and fill: </p>
-<ul>
-<li>Azure SQL Database</li>
-<li>mysqldbsrv34.database.windows.net</li>
-<li>mysqldw34</li>
-<li>admin34</li>
-<li>DDtgjiuz96<em>__</em></li>
-<li>select top 1500 * from mydata WHERE [sc-status]=’200’ ORDER BY date, time asc</li>
-</ul>
-<p><img src="/images/151127a/9.png" alt=""> </p>
-<p>click Run at the bottom of the page, then you can visualize the dataset</p>
-<p><img src="/images/151127a/11.png" alt=""></p>
-<p><img src="/images/151127a/10.png" alt=""></p>
-<h2 id="Jupyter"><a href="#Jupyter" class="headerlink" title="Jupyter"></a>Jupyter</h2><p>You may also want to use the dataset in a Jupyter notebook.<br>For that, you just have to convert the dataset to CSV and then generate the code to access the dataset from Azure Machine Learning.</p>
-<p>Drag &amp; drop the Convert to CSV shape, connect it to the reader. Then you can generate the Python code to access that dataset or directly ask for a new notebook that will have access to the dataset: </p>
-<p><img src="/images/151127a/12.png" alt=""></p>
-<p><img src="/images/151127a/13.png" alt=""></p>
-<h2 id="PowerBI"><a href="#PowerBI" class="headerlink" title="PowerBI"></a>PowerBI</h2><p>You may also want to see your dataset</p>
-<p>For that, you can go to your Power BI environment at <a href="https://app.powerbi.com" target="_blank" rel="external">app.powerbi.com</a>, choose Get Data, Databases &amp; More and choose Azure SQL Data Warehouse.</p>
-<p><img src="/images/151127a/14.png" alt=""></p>
-<ul>
-<li>mysqldbsrv34.database.windows.net</li>
-<li>mysqldw34</li>
-<li>Next</li>
-<li>admin34</li>
-<li>DDtgjiuz96<em>__</em></li>
-</ul>
-<p>from there, you have the dataset available, and can visualize it: </p>
-<p><img src="/images/151127a/15.png" alt=""></p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We saw how to load flat files in a SQL DW, then in Azure Machine Learning and Jupyter, as well as Power BI.</p>
-<p>:-) <a href="https://twitter.com/benjguin" target="_blank" rel="external">benjguin</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/" data-id="ciq9yp26f0001p0cdcbdd6ypd" class="article-share-link">Share</a>
-      
-        <a href="http://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azure/">Azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Science/">Data Science</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -538,7 +627,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure-Machine-Learning/">Azure Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Science/">Data Science</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure-Machine-Learning/">Azure Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AzureFunctions/">AzureFunctions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Science/">Data Science</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sigfox/">Sigfox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li></ul>
     </div>
   </div>
 
@@ -548,7 +637,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Azure-Machine-Learning/" style="font-size: 10px;">Azure Machine Learning</a> <a href="/tags/Big-Data/" style="font-size: 16.67px;">Big Data</a> <a href="/tags/Data-Science/" style="font-size: 13.33px;">Data Science</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a>
+      <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Azure-Machine-Learning/" style="font-size: 10px;">Azure Machine Learning</a> <a href="/tags/AzureFunctions/" style="font-size: 10px;">AzureFunctions</a> <a href="/tags/Big-Data/" style="font-size: 16.67px;">Big Data</a> <a href="/tags/Data-Science/" style="font-size: 13.33px;">Data Science</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/Sigfox/" style="font-size: 10px;">Sigfox</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a>
     </div>
   </div>
 
@@ -557,7 +646,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li></ul>
     </div>
   </div>
 
@@ -568,6 +657,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/09/05/IOT_Hub_Azure_Functions_Sigfox/">Tutoriel - Synchronisation De Votre Application De Fonction Avec Le Concentrateur IoT Et Exemple De Connexion Avec Un Objet Sigfox</a>
+          </li>
         
           <li>
             <a href="/2016/08/30/deploying_containers_to_one_or_several_VMs/">Deploying Containers to One or Several VMs</a>
@@ -583,10 +676,6 @@
         
           <li>
             <a href="/2015/12/02/different-flavors-of-hadoop/">Different Flavors of Hadoop &amp; Spark</a>
-          </li>
-        
-          <li>
-            <a href="/2015/11/27/sqldw-azureml-jupyter-powerbi/">SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI</a>
           </li>
         
       </ul>
