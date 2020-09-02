@@ -60,7 +60,7 @@
     <article id="post-2020/09/02/docker-volumes-in-codespace" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/09/02/docker-volumes-in-codespace/" class="article-date">
-  <time datetime="2020-09-02T15:41:43.061Z" itemprop="datePublished">2020-09-02</time>
+  <time datetime="2020-09-02T16:58:42.296Z" itemprop="datePublished">2020-09-02</time>
 </a>
     
   </div>
@@ -69,12 +69,42 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="How-to-share-a-volume-with-a-specific-docker-container-in-Visual-Studio-Codespaces"><a href="#How-to-share-a-volume-with-a-specific-docker-container-in-Visual-Studio-Codespaces" class="headerlink" title="How to share a volume with a specific docker container in Visual Studio Codespaces"></a>How to share a volume with a specific docker container in Visual Studio Codespaces</h1><p>xxx (to be written)</p>
+        <h1 id="How-to-share-a-volume-with-a-specific-docker-container-in-Visual-Studio-Codespaces"><a href="#How-to-share-a-volume-with-a-specific-docker-container-in-Visual-Studio-Codespaces" class="headerlink" title="How to share a volume with a specific docker container in Visual Studio Codespaces"></a>How to share a volume with a specific docker container in Visual Studio Codespaces</h1><blockquote>
+<p>Visual Studio Codespaces provides cloud-powered development environments for any activity - whether it’s a long-term project, or a short-term task like reviewing a pull request</p>
+</blockquote>
+<p>I use it to have a development environment dedicated to a repo.<br>I like it because I have a Debian environment that includes most of the tools I need including Docker.  </p>
+<p>You’ll find information in the documentation at <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/visualstudio/codespaces/overview/what-is-vsonline">https://docs.microsoft.com/en-us/visualstudio/codespaces/overview/what-is-vsonline</a>.</p>
+<p>One of the things I found tricky was to <code>docker run</code> with a volume that points back to my development environment.</p>
+<h2 id="what-is-the-problem"><a href="#what-is-the-problem" class="headerlink" title="what is the problem?"></a>what is the problem?</h2><p>I created a sample repo: <a target="_blank" rel="noopener" href="https://github.com/benjguin/sample200902">https://github.com/benjguin/sample200902</a></p>
+<p>I create a Visual Studio Codespace for it.<br>I go to <a target="_blank" rel="noopener" href="https://online.visualstudio.com/environments">https://online.visualstudio.com/environments</a>, then <code>Create Codespace</code> with the following parameters:  </p>
+<ul>
+<li>Codespace Name: sample200902</li>
+<li>Git Repository: <a target="_blank" rel="noopener" href="https://github.com/benjguin/sample200902.git">https://github.com/benjguin/sample200902.git</a></li>
+<li>(keep default for the rest)</li>
+</ul>
+<p>From the command line part of Visual Studio (CTRL-`), I have:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">codespace:~&#x2F;workspace&#x2F;sample200902$ docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES</span><br><span class="line">443c621d0ef5        1da2d08caca9        &quot;&#x2F;usr&#x2F;local&#x2F;share&#x2F;do…&quot;   44 seconds ago      Up 42 seconds                           codespaces_5d85d6</span><br></pre></td></tr></table></figure>
+
+<p>The container I see (<code>443c621d0ef5</code>) happens to be the container from which the command line executed.<br>In other words, the development environment is not the docker host. It can control docker on the host, but the development environment runs in a container.  </p>
+<p>So if I try to run docker with a volume pointing to my current folder, that will not work.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">codespace:~&#x2F;workspace&#x2F;sample200902$ docker run -it --rm -v $PWD:&#x2F;my-vol alpine sh</span><br><span class="line">&#x2F; # ls -al &#x2F;my-vol</span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x    2 root     root          4096 Sep  2 16:33 .</span><br><span class="line">drwxr-xr-x    1 root     root          4096 Sep  2 16:33 ..</span><br></pre></td></tr></table></figure>
+
+<p>Why? Because $PWD points to current working dir on the host, not on the dev container.</p>
+<h2 id="How-to-workaround-it"><a href="#How-to-workaround-it" class="headerlink" title="How to workaround it?"></a>How to workaround it?</h2><p>Both development environment and container can meet in a common folder on the docker host.</p>
+<p>By inspecting our development environment we can find one:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">codespace:~&#x2F;workspace&#x2F;sample200902$ docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES</span><br><span class="line">443c621d0ef5        1da2d08caca9        &quot;&#x2F;usr&#x2F;local&#x2F;share&#x2F;do…&quot;   35 minutes ago      Up 35 minutes                           codespaces_5d85d6</span><br><span class="line">codespace:~&#x2F;workspace&#x2F;sample200902$ docker inspect 44 | grep containerTmp --before&#x3D;5 --after&#x3D;5</span><br><span class="line">                &quot;&#x2F;root&#x2F;.vsonline&#x2F;.vsoshared:&#x2F;home&#x2F;codespace&#x2F;.vsonline&#x2F;.vsoshared&quot;,</span><br><span class="line">                &quot;&#x2F;.vsonline&#x2F;vsoagent&#x2F;mount:&#x2F;.vsonline&#x2F;bin&quot;,</span><br><span class="line">                &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;vsonlinemount&#x2F;workspace:&#x2F;home&#x2F;codespace&#x2F;workspace&quot;,</span><br><span class="line">                &quot;&#x2F;var&#x2F;run&#x2F;docker.sock:&#x2F;var&#x2F;run&#x2F;docker.sock:ro&quot;,</span><br><span class="line">                &quot;&#x2F;usr&#x2F;bin&#x2F;docker:&#x2F;usr&#x2F;bin&#x2F;docker:ro&quot;,</span><br><span class="line">                &quot;&#x2F;mnt&#x2F;containerTmp:&#x2F;tmp&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ContainerIDFile&quot;: &quot;&quot;,</span><br><span class="line">            &quot;LogConfig&quot;: &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;json-file&quot;,</span><br><span class="line">                &quot;Config&quot;: &#123;&#125;</span><br><span class="line">--</span><br><span class="line">                &quot;RW&quot;: false,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;&#x2F;mnt&#x2F;containerTmp&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;&#x2F;tmp&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>basically, <code>/mnt/containerTmp</code> on the host is <code>/tmp</code> in the dev container.</p>
+<p>So let’s try this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">codespace:~&#x2F;workspace&#x2F;sample200902$ cp some-content.txt &#x2F;tmp&#x2F;content-copy.txt</span><br><span class="line">&#x2F; # codespace:~&#x2F;workspace&#x2F;sample2009docker run -it --rm -v &#x2F;mnt&#x2F;containerTmp&#x2F;:&#x2F;my-vol alpine sh</span><br><span class="line">&#x2F; # ls &#x2F;my-vol&#x2F;*.txt</span><br><span class="line">&#x2F;my-vol&#x2F;content-copy.txt</span><br><span class="line">&#x2F; # cat &#x2F;my-vol&#x2F;content-copy.txt</span><br><span class="line">hey, I&#39;m a text file in the dev environment.</span><br><span class="line">&#x2F; # </span><br></pre></td></tr></table></figure>
+
+<p>I had to use that in a project where we needed to interact with binary files from within the container, and be able to test from within the development environment.<br>This trick helped me!</p>
+<p>:-) b</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://blog.3-4.fr/2020/09/02/docker-volumes-in-codespace/" data-id="ckeljtn78000bfbhndo0b3cgv" class="article-share-link">Share</a>
+      <a data-url="https://blog.3-4.fr/2020/09/02/docker-volumes-in-codespace/" data-id="ckelmkf1j000biehn8lhygfly" class="article-share-link">Share</a>
       
         <a href="https://blog.3-4.fr/2020/09/02/docker-volumes-in-codespace/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -199,7 +229,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://blog.3-4.fr/2016/12/12/Sample_Flink_Code/" data-id="ckeljtn7o0014fbhn3po8fdd4" class="article-share-link">Share</a>
+      <a data-url="https://blog.3-4.fr/2016/12/12/Sample_Flink_Code/" data-id="ckelmkf1z0014iehnd0ey7j8v" class="article-share-link">Share</a>
       
         <a href="https://blog.3-4.fr/2016/12/12/Sample_Flink_Code/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -439,7 +469,7 @@ Il est recommandé de mettre la date et l’heure qu’il est au moment où vous
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://blog.3-4.fr/2016/09/05/IOT_Hub_Azure_Functions_Sigfox/" data-id="ckeljtn7n0013fbhn6sazauej" class="article-share-link">Share</a>
+      <a data-url="https://blog.3-4.fr/2016/09/05/IOT_Hub_Azure_Functions_Sigfox/" data-id="ckelmkf1y0013iehn1eak0e9f" class="article-share-link">Share</a>
       
         <a href="https://blog.3-4.fr/2016/09/05/IOT_Hub_Azure_Functions_Sigfox/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -507,7 +537,7 @@ Il est recommandé de mettre la date et l’heure qu’il est au moment où vous
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://blog.3-4.fr/2016/08/30/deploying_containers_to_one_or_several_VMs/" data-id="ckeljtn77000afbhn2z3559mb" class="article-share-link">Share</a>
+      <a data-url="https://blog.3-4.fr/2016/08/30/deploying_containers_to_one_or_several_VMs/" data-id="ckelmkf1j000aiehnhjjjchi9" class="article-share-link">Share</a>
       
         <a href="https://blog.3-4.fr/2016/08/30/deploying_containers_to_one_or_several_VMs/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -558,7 +588,7 @@ Il est recommandé de mettre la date et l’heure qu’il est au moment où vous
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://blog.3-4.fr/2015/12/18/azure_ml_remove_label_from_web_service/" data-id="ckeljtn760008fbhnhxba1csa" class="article-share-link">Share</a>
+      <a data-url="https://blog.3-4.fr/2015/12/18/azure_ml_remove_label_from_web_service/" data-id="ckelmkf1h0008iehn3l49hvts" class="article-share-link">Share</a>
       
         <a href="https://blog.3-4.fr/2015/12/18/azure_ml_remove_label_from_web_service/#disqus_thread" class="article-comment-link">Comments</a>
       
