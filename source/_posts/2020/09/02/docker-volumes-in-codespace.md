@@ -1,17 +1,18 @@
 # How to share a volume with a specific docker container in Visual Studio Codespaces
 
-> Visual Studio Codespaces provides cloud-powered development environments for any activity - whether it's a long-term project, or a short-term task like reviewing a pull request
+Visual Studio Codespaces provides cloud-powered development environments for any activity - whether it's a long-term project, or a short-term task like reviewing a pull request
 
 I use it to have a development environment dedicated to a repo.  
-I like it because I have a Debian environment that includes most of the tools I need including Docker.  
+I like it because it provides me with a Linux environment that includes most of the tools I need,
+including Docker.  
 
-You'll find information in the documentation at <https://docs.microsoft.com/en-us/visualstudio/codespaces/overview/what-is-vsonline>.
+You'll find more information in the documentation at <https://docs.microsoft.com/en-us/visualstudio/codespaces/overview/what-is-vsonline>.
 
 One of the things I found tricky was to `docker run` with a volume that points back to my development environment.
 
 ## what is the problem?
 
-I created a sample repo: <https://github.com/benjguin/sample200902>
+To illustrate the issue, I created a sample repo: <https://github.com/benjguin/sample200902>
 
 I create a Visual Studio Codespace for it.  
 I go to <https://online.visualstudio.com/environments>, then `Create Codespace` with the following parameters:  
@@ -28,9 +29,10 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 ```
 
 The container I see (`443c621d0ef5`) happens to be the container from which the command line executed.  
-In other words, the development environment is not the docker host. It can control docker on the host, but the development environment runs in a container.  
+In other words, the development environment is a container, not the docker host itself.  
 
-So if I try to run docker with a volume pointing to my current folder, that will not work.
+So, if I try to run docker with a volume pointing back to my current folder, I do not see the local folder content.  
+Let's try:
 
 ```log
 codespace:~/workspace/sample200902$ docker run -it --rm -v $PWD:/my-vol alpine sh
@@ -44,7 +46,7 @@ Why? Because $PWD points to current working dir on the host, not on the dev cont
 
 ## How to workaround it?
 
-Both development environment and container can meet in a common folder on the docker host.
+Both development environment and container can meet in a common folder, on the docker host.
 
 By inspecting our development environment we can find one:
 
@@ -80,17 +82,25 @@ codespace:~/workspace/sample200902$ docker inspect 44 | grep containerTmp --befo
 
 basically, `/mnt/containerTmp` on the host is `/tmp` in the dev container.
 
-So let's try this:
+So let's try to mount `/mnt/containerTmp` in the docker container to see if we can see what's in the dev container's `/tmp` folder:
 
 ```log
 codespace:~/workspace/sample200902$ cp some-content.txt /tmp/content-copy.txt
-/ # codespace:~/workspace/sample2009docker run -it --rm -v /mnt/containerTmp/:/my-vol alpine sh
+codespace:~/workspace/sample2009$ docker run -it --rm -v /mnt/containerTmp/:/my-vol alpine sh
 / # ls /my-vol/*.txt
 /my-vol/content-copy.txt
 / # cat /my-vol/content-copy.txt
 hey, I'm a text file in the dev environment.
 / # 
 ```
+
+It works. Here is what happened:
+
+- Host 
+    - dev container
+        - /tmp/content-copy.txt -> Host /mnt/mnt/containerTmp/content-copy.txt
+    - alpine container
+        - /my-vol/content-copy.txt -> Host /mnt/mnt/containerTmp/content-copy.txt
 
 I had to use that in a project where we needed to interact with binary files from within the container, and be able to test from within the development environment.  
 This trick helped me!
