@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <title>MapR on Azure | Benjamin Guinebertière&#39;s blog (@benjguin)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="IntroductionThere are different ways to install Hadoop on Azure. The blog post about the different flavors of Hadoop will provide more context.
-This blog post shows the main steps to start with MapR o">
+  <meta name="description" content="IntroductionThere are different ways to install Hadoop on Azure. The blog post about the different flavors of Hadoop will provide more context. This blog post shows the main steps to start with MapR o">
+<meta name="keywords" content="Azure,Big Data,Hadoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MapR on Azure">
-<meta property="og:url" content="http://blog.3-4.fr/2015/12/02/mapr-on-azure/index.html">
-<meta property="og:site_name" content="Benjamin Guinebertière's blog (@benjguin)">
-<meta property="og:description" content="IntroductionThere are different ways to install Hadoop on Azure. The blog post about the different flavors of Hadoop will provide more context.
-This blog post shows the main steps to start with MapR o">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/1.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/2.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/3.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/4.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/4b.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/5.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/6.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/7.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/8.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/9.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/10.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/11.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/12.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/13.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/14.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/15.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/16.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/17.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/18.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/19.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151202b/20.png">
-<meta property="og:updated_time" content="2016-07-06T12:27:13.830Z">
+<meta property="og:url" content="https://blog.3-4.fr/2015/12/02/mapr-on-azure/index.html">
+<meta property="og:site_name" content="Benjamin Guinebertière&#39;s blog (@benjguin)">
+<meta property="og:description" content="IntroductionThere are different ways to install Hadoop on Azure. The blog post about the different flavors of Hadoop will provide more context. This blog post shows the main steps to start with MapR o">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/1.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/2.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/3.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/4.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/4b.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/5.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/6.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/7.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/8.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/9.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/10.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/11.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/12.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/13.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/14.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/15.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/16.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/17.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/18.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/19.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151202b/20.png">
+<meta property="og:updated_time" content="2020-09-02T14:44:44.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapR on Azure">
-<meta name="twitter:description" content="IntroductionThere are different ways to install Hadoop on Azure. The blog post about the different flavors of Hadoop will provide more context.
-This blog post shows the main steps to start with MapR o">
-<meta name="twitter:image" content="http://blog.3-4.fr/images/151202b/1.png">
+<meta name="twitter:description" content="IntroductionThere are different ways to install Hadoop on Azure. The blog post about the different flavors of Hadoop will provide more context. This blog post shows the main steps to start with MapR o">
+<meta name="twitter:image" content="https://blog.3-4.fr/images/151202b/1.png">
   
     <link rel="icon" href="/favicon.png">
   
@@ -47,9 +46,9 @@ This blog post shows the main steps to start with MapR o">
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <link rel="stylesheet" href="/css/style.css">
-  <script type='text/javascript' src='/js/tag.js'></script>
+  <script type="text/javascript" src="/js/tag.js"></script>
 </head>
-
+</html>
 <body>
   <div id="container">
     <div id="wrap">
@@ -75,7 +74,7 @@ This blog post shows the main steps to start with MapR o">
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.3-4.fr"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.3-4.fr"></form>
       </div>
     </div>
   </div>
@@ -84,7 +83,7 @@ This blog post shows the main steps to start with MapR o">
         <section id="main"><article id="post-2015/12/02/mapr-on-azure" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/02/mapr-on-azure/" class="article-date">
-  <time datetime="2015-12-01T23:00:00.000Z" itemprop="datePublished">2015-12-02</time>
+  <time datetime="2015-12-02T00:00:00.000Z" itemprop="datePublished">2015-12-02</time>
 </a>
     
   </div>
@@ -105,55 +104,55 @@ This blog post shows the main steps to start with MapR o">
       
         <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>There are different ways to install Hadoop on Azure. The blog post about the <a href="/2015/12/02a/different-flavors-of-hadoop.html">different flavors of Hadoop</a> will provide more context.</p>
 <p>This blog post shows the main steps to start with MapR on Azure. </p>
-<h2 id="How-to"><a href="#How-to" class="headerlink" title="How to"></a>How to</h2><p>In order to install the cluster, follow the wizzard that you’ll find in <a href="https://portal.azure.com" target="_blank" rel="external">Azure portal</a>.</p>
+<h2 id="How-to"><a href="#How-to" class="headerlink" title="How to"></a>How to</h2><p>In order to install the cluster, follow the wizzard that you’ll find in <a href="https://portal.azure.com" target="_blank" rel="noopener">Azure portal</a>.</p>
 <p>Here is a quick view of this wizzard: </p>
-<p><img src="/images/151202b/1.png" alt=""></p>
-<p><img src="/images/151202b/2.png" alt=""></p>
-<p><img src="/images/151202b/3.png" alt=""></p>
-<p><img src="/images/151202b/4.png" alt=""></p>
-<p><img src="/images/151202b/4b.png" alt=""></p>
-<p>Step 3 gives you a chance to download the generated Azure resource manager wizzard that you can modify and deploy as described in the following article: <a href="https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/" target="_blank" rel="external">Deploy an application with Azure Resource Manager template</a>.</p>
-<p><img src="/images/151202b/5.png" alt=""></p>
+<p><img src="/images/151202b/1.png" alt></p>
+<p><img src="/images/151202b/2.png" alt></p>
+<p><img src="/images/151202b/3.png" alt></p>
+<p><img src="/images/151202b/4.png" alt></p>
+<p><img src="/images/151202b/4b.png" alt></p>
+<p>Step 3 gives you a chance to download the generated Azure resource manager wizzard that you can modify and deploy as described in the following article: <a href="https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/" target="_blank" rel="noopener">Deploy an application with Azure Resource Manager template</a>.</p>
+<p><img src="/images/151202b/5.png" alt></p>
 <p>Once you’ve created the cluster, go to <code>https://{yourclustername}-node0.{install-location}.cloudapp.azure.com:9443</code> and connect.</p>
 <p>In my case, I named the cluster <code>mapr34</code> and installed it in North Europe region, so it is <code>https://mapr34-node0.northeurope.cloudapp.azure.com:9443</code>.</p>
 <p>NB: this <code>mapr34-node0.northeurope.cloudapp.azure.com</code>host name can be found in the portal when you browse the resource group where the cluster is. It’s attached to the public IP of the node.</p>
-<p><img src="/images/151202b/6.png" alt=""></p>
+<p><img src="/images/151202b/6.png" alt></p>
 <p>Use mapr as the username and the password you provided in step 2 of the wizzard as the password.</p>
-<p><img src="/images/151202b/7.png" alt=""></p>
+<p><img src="/images/151202b/7.png" alt></p>
 <p>Select each node and check the disks where you want to install the distributed file system.<br>/dev/sdb1 is the cache disk. The 1023 GB disks are VHDs.</p>
 <p>Use the Next button to move on </p>
-<p><img src="/images/151202b/8.png" alt=""></p>
+<p><img src="/images/151202b/8.png" alt></p>
 <p>Click <code>Install -&gt;</code> to start the installation process.</p>
-<p><img src="/images/151202b/9.png" alt=""></p>
-<p><img src="/images/151202b/10.png" alt=""></p>
+<p><img src="/images/151202b/9.png" alt></p>
+<p><img src="/images/151202b/10.png" alt></p>
 <p>After a number of minutes, the installation completes. </p>
-<p><img src="/images/151202b/11.png" alt=""></p>
-<p><img src="/images/151202b/12.png" alt=""></p>
+<p><img src="/images/151202b/11.png" alt></p>
+<p><img src="/images/151202b/12.png" alt></p>
 <p>On the final step, you can find a link to a short name. Unless you’ve created an SSH tunnel to your cluster, you may need to use the long name instead. In this example where my cluster is called <code>mapr34</code> and is installed in North Europe, the URL is <code>https://mapr34node1:8443/</code>. I replace it by <code>https://mapr34-node1.northeurope.cloudapp.azure.com:8443</code>. </p>
 <p>NB: this <code>mapr34-node1.northeurope.cloudapp.azure.com</code>host name can be found in the portal when you browse the resource group where the cluster is. It’s attached to the public IP of the node. </p>
-<p><img src="/images/151202b/13.png" alt=""></p>
+<p><img src="/images/151202b/13.png" alt></p>
 <p>ypou connect with the same credentials as before: mapr/{the password you provided in step 2 of the creation wizzard}.</p>
-<p><img src="/images/151202b/14.png" alt=""></p>
+<p><img src="/images/151202b/14.png" alt></p>
 <p>Now that the MapR file system is installed. Let’s see it as HDFS. Let’s also check if we can access Azure blob storage.</p>
-<p><img src="/images/151202b/15.png" alt=""></p>
+<p><img src="/images/151202b/15.png" alt></p>
 <p>The <code>wasb</code> driver (wasb stands for Windows Azure Storage Blob) is not installed by default :-( .  </p>
-<p><img src="/images/151202b/16.png" alt=""></p>
-<p><img src="/images/151202b/17.png" alt=""></p>
+<p><img src="/images/151202b/16.png" alt></p>
+<p><img src="/images/151202b/17.png" alt></p>
 <p>If you go back to the installation page you’ll have the option to install additional services: </p>
-<p><img src="/images/151202b/18.png" alt=""></p>
-<p>When you’re done, you can stop the services, before shutting down the Azure virtual machines. If there are many nodes, you may want to use Azure PowerShell module or Azure Command Line Interface (Azure CLI). You can find them in the resources section of <a href="http://azure.com" target="_blank" rel="external">azure.com</a>. </p>
-<p><img src="/images/151202b/19.png" alt=""></p>
+<p><img src="/images/151202b/18.png" alt></p>
+<p>When you’re done, you can stop the services, before shutting down the Azure virtual machines. If there are many nodes, you may want to use Azure PowerShell module or Azure Command Line Interface (Azure CLI). You can find them in the resources section of <a href="http://azure.com" target="_blank" rel="noopener">azure.com</a>. </p>
+<p><img src="/images/151202b/19.png" alt></p>
 <p>You may also prefer to remove all the resources that consitute the cluster: VMs, storage, vNet and so on. Of course, all the data will be removed as well, so you are asked to type the resource group before deleting it.</p>
-<p><img src="/images/151202b/20.png" alt=""></p>
+<p><img src="/images/151202b/20.png" alt></p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We saw how to create a MapR cluster in Azure. You just have to enter a few parameters in friendly Web interfaces and wait for the cloud and MapR to create everything for you!</p>
-<p>:-)<br>Benjamin (<a href="http://twitter.com/@benjguin" target="_blank" rel="external">@benjguin</a>)</p>
+<p>:-)<br>Benjamin (<a href="http://twitter.com/@benjguin" target="_blank" rel="noopener">@benjguin</a>)</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.3-4.fr/2015/12/02/mapr-on-azure/" data-id="ciqaupb9c0000b0cdvbwlc2sb" class="article-share-link">Share</a>
+      <a data-url="https://blog.3-4.fr/2015/12/02/mapr-on-azure/" data-id="ckelhsfib001bdyhnshsn8cfw" class="article-share-link">Share</a>
       
-        <a href="http://blog.3-4.fr/2015/12/02/mapr-on-azure/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="https://blog.3-4.fr/2015/12/02/mapr-on-azure/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azure/">Azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
@@ -164,19 +163,19 @@ This blog post shows the main steps to start with MapR o">
     
 <nav id="article-nav">
   
-    <a href="/2015/12/18/azure_ml_remove_label_from_web_service/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/12/02/different-flavors-of-hadoop/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Azure ML, Remove Label From Web Service
+          Different Flavors of Hadoop &amp; Spark
         
       </div>
     </a>
   
   
-    <a href="/2015/12/02/different-flavors-of-hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/11/27/sqldw-azureml-jupyter-powerbi/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Different Flavors of Hadoop &amp; Spark</div>
+      <div class="article-nav-title">SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI</div>
     </a>
   
 </nav>
@@ -220,7 +219,7 @@ This blog post shows the main steps to start with MapR o">
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li></ul>
     </div>
   </div>
 
@@ -231,6 +230,10 @@ This blog post shows the main steps to start with MapR o">
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/09/02/docker-volumes-in-codespace/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2016/12/12/Sample_Flink_Code/">Sample Flink Code That Reads From Kafka and Writes to Cassandra</a>
@@ -248,10 +251,6 @@ This blog post shows the main steps to start with MapR o">
             <a href="/2015/12/18/azure_ml_remove_label_from_web_service/">Azure ML, Remove Label From Web Service</a>
           </li>
         
-          <li>
-            <a href="/2015/12/02/mapr-on-azure/">MapR on Azure</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -264,7 +263,7 @@ This blog post shows the main steps to start with MapR o">
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2016 Benjamin Guinebertière<br>
+      &copy; 2020 Benjamin Guinebertière<br>
     </div>
   </div>
 </footer>
@@ -280,7 +279,7 @@ This blog post shows the main steps to start with MapR o">
 <script>
   var disqus_shortname = 'benjguin-blog34';
   
-  var disqus_url = 'http://blog.3-4.fr/2015/12/02/mapr-on-azure/';
+  var disqus_url = 'https://blog.3-4.fr/2015/12/02/mapr-on-azure/';
   
   (function(){
     var dsq = document.createElement('script');

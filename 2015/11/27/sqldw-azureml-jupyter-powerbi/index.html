@@ -1,45 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <title>SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI | Benjamin Guinebertière&#39;s blog (@benjguin)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="This blog post shows how to load data from blob storage to the following (in order): 
-
-SQL Datawarehouse (SQL DW for short). SQL DW has the following advantages
-It can scale up and down in a few secon">
+  <meta name="description" content="This blog post shows how to load data from blob storage to the following (in order):   SQL Datawarehouse (SQL DW for short). SQL DW has the following advantages It can scale up and down in a few secon">
+<meta name="keywords" content="Azure,Data Science,Big Data">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI">
-<meta property="og:url" content="http://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/index.html">
-<meta property="og:site_name" content="Benjamin Guinebertière's blog (@benjguin)">
-<meta property="og:description" content="This blog post shows how to load data from blob storage to the following (in order): 
-
-SQL Datawarehouse (SQL DW for short). SQL DW has the following advantages
-It can scale up and down in a few secon">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/1.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/2.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/3.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/4.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/5.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/6.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/7.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/8.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/9.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/11.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/10.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/12.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/13.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/14.png">
-<meta property="og:image" content="http://blog.3-4.fr/images/151127a/15.png">
-<meta property="og:updated_time" content="2016-07-06T12:24:02.053Z">
+<meta property="og:url" content="https://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/index.html">
+<meta property="og:site_name" content="Benjamin Guinebertière&#39;s blog (@benjguin)">
+<meta property="og:description" content="This blog post shows how to load data from blob storage to the following (in order):   SQL Datawarehouse (SQL DW for short). SQL DW has the following advantages It can scale up and down in a few secon">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/1.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/2.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/3.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/4.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/5.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/6.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/7.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/8.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/9.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/11.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/10.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/12.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/13.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/14.png">
+<meta property="og:image" content="https://blog.3-4.fr/images/151127a/15.png">
+<meta property="og:updated_time" content="2020-09-02T14:44:44.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL DataWarehouse, Azure Machine Learning, Jupyter, Power BI">
-<meta name="twitter:description" content="This blog post shows how to load data from blob storage to the following (in order): 
-
-SQL Datawarehouse (SQL DW for short). SQL DW has the following advantages
-It can scale up and down in a few secon">
-<meta name="twitter:image" content="http://blog.3-4.fr/images/151127a/1.png">
+<meta name="twitter:description" content="This blog post shows how to load data from blob storage to the following (in order):   SQL Datawarehouse (SQL DW for short). SQL DW has the following advantages It can scale up and down in a few secon">
+<meta name="twitter:image" content="https://blog.3-4.fr/images/151127a/1.png">
   
     <link rel="icon" href="/favicon.png">
   
@@ -47,9 +40,9 @@ It can scale up and down in a few secon">
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <link rel="stylesheet" href="/css/style.css">
-  <script type='text/javascript' src='/js/tag.js'></script>
+  <script type="text/javascript" src="/js/tag.js"></script>
 </head>
-
+</html>
 <body>
   <div id="container">
     <div id="wrap">
@@ -75,7 +68,7 @@ It can scale up and down in a few secon">
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.3-4.fr"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.3-4.fr"></form>
       </div>
     </div>
   </div>
@@ -84,7 +77,7 @@ It can scale up and down in a few secon">
         <section id="main"><article id="post-2015/11/27/sqldw-azureml-jupyter-powerbi" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/11/27/sqldw-azureml-jupyter-powerbi/" class="article-date">
-  <time datetime="2015-11-26T23:00:00.000Z" itemprop="datePublished">2015-11-27</time>
+  <time datetime="2015-11-27T00:00:00.000Z" itemprop="datePublished">2015-11-27</time>
 </a>
     
   </div>
@@ -132,18 +125,18 @@ It can scale up and down in a few secon">
 </ul>
 </li>
 </ul>
-<p>There is also a good article with demo videos in the following article: <a href="https://azure.microsoft.com/en-us/blog/using-azure-machine-learning-with-sql-data-warehouse/" target="_blank" rel="external">Using Azure Machine Learning with SQL Data Warehouse</a>.</p>
+<p>There is also a good article with demo videos in the following article: <a href="https://azure.microsoft.com/en-us/blog/using-azure-machine-learning-with-sql-data-warehouse/" target="_blank" rel="noopener">Using Azure Machine Learning with SQL Data Warehouse</a>.</p>
 <h2 id="conventions"><a href="#conventions" class="headerlink" title="conventions"></a>conventions</h2><p>This is a sample.<br>By convention, all values ended by 34 should be replaced by your own values. For instance, the data storage account is <code>mydata34</code>. Yours should have a different name.</p>
 <h2 id="the-sample-dataset"><a href="#the-sample-dataset" class="headerlink" title="the sample dataset"></a>the sample dataset</h2><p>The data is available as a number of flat delimited files in a blob storage container. In this example, there are 2 files. here are a few lines of data: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Modules/Orchard.Localization/Styles/orchard-localization-base.css|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|554|15</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|-|site.supersimple.fr|200|0|0|1917|367|203</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Themes/Classic/Styles/Site.css|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|92|520|218</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Core/Shapes/scripts/html5.js|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|517|218</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Core/Shapes/scripts/html5.js|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=2aNXfgccF5TrHacVp9ReeLniHeKovLv/1lYP13EyQ4pYy21MvX4WFH+1Kg9/R+02r4vhkZo0wvOLXZ233O0Sn2QC+n+7EobKV6+7J0lqG0F1g/oc/RCSO3NhrWAoFNzqIEUm0AgJkY0MIhA5XPTX0s0jFLw=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|517|265</div><div class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Core/Shapes/scripts/html5.js|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|517|218</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Modules/Orchard.Localization/Styles/orchard-localization-base.css|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|554|15</span><br><span class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|-|site.supersimple.fr|200|0|0|1917|367|203</span><br><span class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Themes/Classic/Styles/Site.css|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|92|520|218</span><br><span class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Core/Shapes/scripts/html5.js|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|517|218</span><br><span class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Core/Shapes/scripts/html5.js|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=2aNXfgccF5TrHacVp9ReeLniHeKovLv/1lYP13EyQ4pYy21MvX4WFH+1Kg9/R+02r4vhkZo0wvOLXZ233O0Sn2QC+n+7EobKV6+7J0lqG0F1g/oc/RCSO3NhrWAoFNzqIEUm0AgJkY0MIhA5XPTX0s0jFLw=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|517|265</span><br><span class="line">2012-01-13|02:00:00|W3SVC1273337584|RD00155D360C23|10.211.162.24|GET|/Core/Shapes/scripts/html5.js|-|80|-|65.52.74.115|HTTP/1.1|Mozilla/4.0+(compatible;+MSIE+8.0;+Windows+NT+5.1)|__RequestVerificationToken_Lw__=JMngbma7rvbnvrzf3Xos7p8GDz3zu4oNwCqOMd0PpxotKkvlvfzHWsGfYm4BJL5CdOCvg7sdtSdOgRGqG9Uick5Jji4cruyaeOv4fYJeN0snqrkYNUI8M179jbaLw80XvLM2OKk8UjxRpKzwjMbBWt6CilU=|http://site.supersimple.fr/|site.supersimple.fr|304|0|0|209|517|218</span><br></pre></td></tr></table></figure>
 <p>Fields are separated by the pipe character (‘|’). The name of the fields are: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">date|time|s-sitename|s-computername|s-ip|cs-method|cs-uri-stem|cs-uri-query|s-port|cs-username|c-ip|cs-version|cs(User-Agent)|cs(Cookie)|cs(Referer)|cs-host|sc-status|sc-substatus|sc-win32-status|sc-bytes|cs-bytes|time-taken</div></pre></td></tr></table></figure>
-<p>The data is available in a storage account.<br><img src="/images/151127a/1.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date|time|s-sitename|s-computername|s-ip|cs-method|cs-uri-stem|cs-uri-query|s-port|cs-username|c-ip|cs-version|cs(User-Agent)|cs(Cookie)|cs(Referer)|cs-host|sc-status|sc-substatus|sc-win32-status|sc-bytes|cs-bytes|time-taken</span><br></pre></td></tr></table></figure>
+<p>The data is available in a storage account.<br><img src="/images/151127a/1.png" alt></p>
 <p>In this example, the storage account name is <code>mydata34</code> and its key is <code>k2JOuW/nru2nW0y3Icpm9yNTYCrUuNSFm9RDyMuBvIKuYqhtPHAK8MW4bVQfWssXp184pGhlKraaOc7sZTDijQ==</code>.</p>
-<p>The key can be found in the portal, for example:<br><img src="/images/151127a/2.png" alt=""></p>
+<p>The key can be found in the portal, for example:<br><img src="/images/151127a/2.png" alt></p>
 <p>NB: by the time your read this page, the key may have change. I share the key so that you can find it in code where it is necessary.</p>
 <h2 id="SQL-Datawarehouse-SQL-DW"><a href="#SQL-Datawarehouse-SQL-DW" class="headerlink" title="SQL Datawarehouse (SQL DW)"></a>SQL Datawarehouse (SQL DW)</h2><p>Let’s create a SQL DW. </p>
-<p><img src="/images/151127a/3.png" alt=""></p>
+<p><img src="/images/151127a/3.png" alt></p>
 <p>choose SQL Data Warehouse and click <code>Create</code>.</p>
 <p>Here is the data you can enter: </p>
 <ul>
@@ -152,67 +145,67 @@ It can scale up and down in a few secon">
 <li>Create a new Server<ul>
 <li>mysqldbsrv34</li>
 <li>admin34</li>
-<li>DDtgjiuz96<em>__</em></li>
+<li>DDtgjiuz96____</li>
 <li>West Europe</li>
 </ul>
 </li>
 </ul>
-<p><img src="/images/151127a/4.png" alt=""></p>
-<p>Once the SQL DW has been created, we must connect to it. One of the tools you can use is Visual Studio; you can download Visual Studio community edition from <a href="https://www.visualstudio.com/" target="_blank" rel="external">visualstudio.com</a>. Please refer to <a href="https://azure.microsoft.com/en-us/documentation/articles/sql-data-warehouse-get-started-connect/" target="_blank" rel="external">Connect to SQL Data Warehouse with Visual Studio</a> for details.</p>
+<p><img src="/images/151127a/4.png" alt></p>
+<p>Once the SQL DW has been created, we must connect to it. One of the tools you can use is Visual Studio; you can download Visual Studio community edition from <a href="https://www.visualstudio.com/" target="_blank" rel="noopener">visualstudio.com</a>. Please refer to <a href="https://azure.microsoft.com/en-us/documentation/articles/sql-data-warehouse-get-started-connect/" target="_blank" rel="noopener">Connect to SQL Data Warehouse with Visual Studio</a> for details.</p>
 <p>You must allow your own IP address to access the SQL DB server: </p>
-<p><img src="/images/151127a/5.png" alt=""></p>
+<p><img src="/images/151127a/5.png" alt></p>
 <p>Let’s load the data.<br>Here is the code that you can paste in Visual Studio and execute:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">--also refer to https://azure.microsoft.com/en-us/documentation/articles/sql-data-warehouse-load-with-polybase/</div><div class="line"></div><div class="line"></div><div class="line">-- Create a master key</div><div class="line">CREATE MASTER KEY;</div><div class="line"></div><div class="line">CREATE DATABASE SCOPED CREDENTIAL mydata_secret </div><div class="line">	WITH IDENTITY = &apos;dummy&apos;, </div><div class="line">	Secret = &apos;k2JOuW/nru2nW0y3Icpm9yNTYCrUuNSFm9RDyMuBvIKuYqhtPHAK8MW4bVQfWssXp184pGhlKraaOc7sZTDijQ==&apos;;</div><div class="line"></div><div class="line">SELECT * FROM sys.database_credentials;</div><div class="line"></div><div class="line">CREATE EXTERNAL DATA SOURCE mydata_datasource WITH</div><div class="line">(</div><div class="line">	TYPE=Hadoop, </div><div class="line">	LOCATION=&apos;wasbs://container1@mydata34.blob.core.windows.net&apos;, </div><div class="line">	CREDENTIAL=mydata_secret</div><div class="line">);</div><div class="line"></div><div class="line">CREATE EXTERNAL FILE FORMAT PIPE_fileformat WITH (</div><div class="line">	FORMAT_TYPE = DELIMITEDTEXT,</div><div class="line">	FORMAT_OPTIONS (</div><div class="line">		FIELD_TERMINATOR=&apos;|&apos;)</div><div class="line">);</div><div class="line"></div><div class="line">drop external table mydata_externaltable;</div><div class="line">create external table mydata_externaltable</div><div class="line">(</div><div class="line">	[date] varchar(255), </div><div class="line">	[time] varchar(255), </div><div class="line">	[s-sitename] varchar(255), </div><div class="line">	[s-computername] varchar(255), </div><div class="line">	[s-ip] varchar(255), </div><div class="line">	[cs-method] varchar(255), </div><div class="line">	[cs-uri-stem] varchar(255), </div><div class="line">	[cs-uri-query] varchar(4000), </div><div class="line">	[s-port] varchar(255), </div><div class="line">	[cs-username] varchar(255), </div><div class="line">	[c-ip] varchar(255), </div><div class="line">	[cs-version] varchar(255), </div><div class="line">	[cs(User-Agent)] varchar(255), </div><div class="line">	[cs(Cookie)] varchar(4000), </div><div class="line">	[cs(Referer)] varchar(255), </div><div class="line">	[cs-host] varchar(255), </div><div class="line">	[sc-status] varchar(255), </div><div class="line">	[sc-substatus] varchar(255), </div><div class="line">	[sc-win32-status] varchar(255), </div><div class="line">	[sc-bytes] varchar(255), </div><div class="line">	[cs-bytes] varchar(255), </div><div class="line">	[time-taken] varchar(255)</div><div class="line">)</div><div class="line">WITH (</div><div class="line">	LOCATION=&apos;/flat_files&apos;,</div><div class="line">	DATA_SOURCE = mydata_datasource,</div><div class="line">	FILE_FORMAT = PIPE_fileformat,</div><div class="line">	REJECT_TYPE = percentage,</div><div class="line">	REJECT_VALUE = 90,</div><div class="line">	REJECT_SAMPLE_VALUE = 200</div><div class="line">);</div><div class="line"></div><div class="line"></div><div class="line">-- create table as select: https://azure.microsoft.com/en-us/documentation/articles/sql-data-warehouse-develop-ctas/</div><div class="line">CREATE TABLE [dbo].[mydata]</div><div class="line">WITH</div><div class="line">(</div><div class="line">    DISTRIBUTION = ROUND_ROBIN,</div><div class="line">    CLUSTERED COLUMNSTORE INDEX</div><div class="line">)</div><div class="line">AS</div><div class="line">	SELECT * FROM mydata_externaltable;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">--also refer to https://azure.microsoft.com/en-us/documentation/articles/sql-data-warehouse-load-with-polybase/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- Create a master key</span><br><span class="line">CREATE MASTER KEY;</span><br><span class="line"></span><br><span class="line">CREATE DATABASE SCOPED CREDENTIAL mydata_secret </span><br><span class="line">	WITH IDENTITY = &apos;dummy&apos;, </span><br><span class="line">	Secret = &apos;k2JOuW/nru2nW0y3Icpm9yNTYCrUuNSFm9RDyMuBvIKuYqhtPHAK8MW4bVQfWssXp184pGhlKraaOc7sZTDijQ==&apos;;</span><br><span class="line"></span><br><span class="line">SELECT * FROM sys.database_credentials;</span><br><span class="line"></span><br><span class="line">CREATE EXTERNAL DATA SOURCE mydata_datasource WITH</span><br><span class="line">(</span><br><span class="line">	TYPE=Hadoop, </span><br><span class="line">	LOCATION=&apos;wasbs://container1@mydata34.blob.core.windows.net&apos;, </span><br><span class="line">	CREDENTIAL=mydata_secret</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE EXTERNAL FILE FORMAT PIPE_fileformat WITH (</span><br><span class="line">	FORMAT_TYPE = DELIMITEDTEXT,</span><br><span class="line">	FORMAT_OPTIONS (</span><br><span class="line">		FIELD_TERMINATOR=&apos;|&apos;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">drop external table mydata_externaltable;</span><br><span class="line">create external table mydata_externaltable</span><br><span class="line">(</span><br><span class="line">	[date] varchar(255), </span><br><span class="line">	[time] varchar(255), </span><br><span class="line">	[s-sitename] varchar(255), </span><br><span class="line">	[s-computername] varchar(255), </span><br><span class="line">	[s-ip] varchar(255), </span><br><span class="line">	[cs-method] varchar(255), </span><br><span class="line">	[cs-uri-stem] varchar(255), </span><br><span class="line">	[cs-uri-query] varchar(4000), </span><br><span class="line">	[s-port] varchar(255), </span><br><span class="line">	[cs-username] varchar(255), </span><br><span class="line">	[c-ip] varchar(255), </span><br><span class="line">	[cs-version] varchar(255), </span><br><span class="line">	[cs(User-Agent)] varchar(255), </span><br><span class="line">	[cs(Cookie)] varchar(4000), </span><br><span class="line">	[cs(Referer)] varchar(255), </span><br><span class="line">	[cs-host] varchar(255), </span><br><span class="line">	[sc-status] varchar(255), </span><br><span class="line">	[sc-substatus] varchar(255), </span><br><span class="line">	[sc-win32-status] varchar(255), </span><br><span class="line">	[sc-bytes] varchar(255), </span><br><span class="line">	[cs-bytes] varchar(255), </span><br><span class="line">	[time-taken] varchar(255)</span><br><span class="line">)</span><br><span class="line">WITH (</span><br><span class="line">	LOCATION=&apos;/flat_files&apos;,</span><br><span class="line">	DATA_SOURCE = mydata_datasource,</span><br><span class="line">	FILE_FORMAT = PIPE_fileformat,</span><br><span class="line">	REJECT_TYPE = percentage,</span><br><span class="line">	REJECT_VALUE = 90,</span><br><span class="line">	REJECT_SAMPLE_VALUE = 200</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- create table as select: https://azure.microsoft.com/en-us/documentation/articles/sql-data-warehouse-develop-ctas/</span><br><span class="line">CREATE TABLE [dbo].[mydata]</span><br><span class="line">WITH</span><br><span class="line">(</span><br><span class="line">    DISTRIBUTION = ROUND_ROBIN,</span><br><span class="line">    CLUSTERED COLUMNSTORE INDEX</span><br><span class="line">)</span><br><span class="line">AS</span><br><span class="line">	SELECT * FROM mydata_externaltable;</span><br></pre></td></tr></table></figure>
 <p>the result of the last statement is</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">    (44819 row(s) affected)</div><div class="line">    </div><div class="line">Query completed. Rows were rejected while reading from external source(s). </div><div class="line">4 rows rejected from external table [mydata_externaltable] in plan step 5 of query execution:</div><div class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 6, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: #Software:|Microsoft|Internet|Information|Services|7.5 (Tokenization failed), Error: Not enough columns in this line.</div><div class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 2, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: #Version:|1.0 (Tokenization failed), Error: Not enough columns in this line.</div><div class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 3, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: #Date:|2012-01-13|01:59:59 (Tokenization failed), Error: Not enough columns in this line.</div><div class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 21, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: |time-taken (Tokenization failed), Error: Too many columns in the line.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    (44819 row(s) affected)</span><br><span class="line">    </span><br><span class="line">Query completed. Rows were rejected while reading from external source(s). </span><br><span class="line">4 rows rejected from external table [mydata_externaltable] in plan step 5 of query execution:</span><br><span class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 6, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: #Software:|Microsoft|Internet|Information|Services|7.5 (Tokenization failed), Error: Not enough columns in this line.</span><br><span class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 2, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: #Version:|1.0 (Tokenization failed), Error: Not enough columns in this line.</span><br><span class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 3, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: #Date:|2012-01-13|01:59:59 (Tokenization failed), Error: Not enough columns in this line.</span><br><span class="line">	Location: &apos;/flat_files/weblogs1.txt&apos; Column ordinal: 21, Expected data type: VARCHAR(255) collate SQL_Latin1_General_CP1_CI_AS, Offending value: |time-taken (Tokenization failed), Error: Too many columns in the line.</span><br></pre></td></tr></table></figure>
 <p>each file has ~22000 lines so the total numlber of lines seems good.</p>
 <p>The rejected lines are some headers that are inside regular rows: </p>
-<p><img src="/images/151127a/6.png" alt=""> </p>
+<p><img src="/images/151127a/6.png" alt> </p>
 <p>We can now query the data: </p>
-<p><img src="/images/151127a/7.png" alt=""> </p>
+<p><img src="/images/151127a/7.png" alt> </p>
 <h2 id="Azure-Machine-Learning"><a href="#Azure-Machine-Learning" class="headerlink" title="Azure Machine Learning"></a>Azure Machine Learning</h2><p>Let’s now get a subset of the data in Azure Machine Learning.<br>For example, the query we need is </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select top 1500 * from mydata WHERE [sc-status]=&apos;200&apos; ORDER BY date, time asc</div></pre></td></tr></table></figure>
-<p>Let’s assume you have an Azure Machine learning available. You’ve created a new experiment from the Studio at <a href="https://studio.azureml.net" target="_blank" rel="external">studio.azureml.net</a>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select top 1500 * from mydata WHERE [sc-status]=&apos;200&apos; ORDER BY date, time asc</span><br></pre></td></tr></table></figure>
+<p>Let’s assume you have an Azure Machine learning available. You’ve created a new experiment from the Studio at <a href="https://studio.azureml.net" target="_blank" rel="noopener">studio.azureml.net</a>.</p>
 <p>Then add a reader</p>
-<p><img src="/images/151127a/8.png" alt=""> </p>
+<p><img src="/images/151127a/8.png" alt> </p>
 <p>In the properties, choose and fill: </p>
 <ul>
 <li>Azure SQL Database</li>
 <li>mysqldbsrv34.database.windows.net</li>
 <li>mysqldw34</li>
 <li>admin34</li>
-<li>DDtgjiuz96<em>__</em></li>
+<li>DDtgjiuz96____</li>
 <li>select top 1500 * from mydata WHERE [sc-status]=’200’ ORDER BY date, time asc</li>
 </ul>
-<p><img src="/images/151127a/9.png" alt=""> </p>
+<p><img src="/images/151127a/9.png" alt> </p>
 <p>click Run at the bottom of the page, then you can visualize the dataset</p>
-<p><img src="/images/151127a/11.png" alt=""></p>
-<p><img src="/images/151127a/10.png" alt=""></p>
+<p><img src="/images/151127a/11.png" alt></p>
+<p><img src="/images/151127a/10.png" alt></p>
 <h2 id="Jupyter"><a href="#Jupyter" class="headerlink" title="Jupyter"></a>Jupyter</h2><p>You may also want to use the dataset in a Jupyter notebook.<br>For that, you just have to convert the dataset to CSV and then generate the code to access the dataset from Azure Machine Learning.</p>
 <p>Drag &amp; drop the Convert to CSV shape, connect it to the reader. Then you can generate the Python code to access that dataset or directly ask for a new notebook that will have access to the dataset: </p>
-<p><img src="/images/151127a/12.png" alt=""></p>
-<p><img src="/images/151127a/13.png" alt=""></p>
+<p><img src="/images/151127a/12.png" alt></p>
+<p><img src="/images/151127a/13.png" alt></p>
 <h2 id="PowerBI"><a href="#PowerBI" class="headerlink" title="PowerBI"></a>PowerBI</h2><p>You may also want to see your dataset</p>
-<p>For that, you can go to your Power BI environment at <a href="https://app.powerbi.com" target="_blank" rel="external">app.powerbi.com</a>, choose Get Data, Databases &amp; More and choose Azure SQL Data Warehouse.</p>
-<p><img src="/images/151127a/14.png" alt=""></p>
+<p>For that, you can go to your Power BI environment at <a href="https://app.powerbi.com" target="_blank" rel="noopener">app.powerbi.com</a>, choose Get Data, Databases &amp; More and choose Azure SQL Data Warehouse.</p>
+<p><img src="/images/151127a/14.png" alt></p>
 <ul>
 <li>mysqldbsrv34.database.windows.net</li>
 <li>mysqldw34</li>
 <li>Next</li>
 <li>admin34</li>
-<li>DDtgjiuz96<em>__</em></li>
+<li>DDtgjiuz96____</li>
 </ul>
 <p>from there, you have the dataset available, and can visualize it: </p>
-<p><img src="/images/151127a/15.png" alt=""></p>
+<p><img src="/images/151127a/15.png" alt></p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We saw how to load flat files in a SQL DW, then in Azure Machine Learning and Jupyter, as well as Power BI.</p>
-<p>:-) <a href="https://twitter.com/benjguin" target="_blank" rel="external">benjguin</a></p>
+<p>:-) <a href="https://twitter.com/benjguin" target="_blank" rel="noopener">benjguin</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/" data-id="ciq9yp26f0001p0cdcbdd6ypd" class="article-share-link">Share</a>
+      <a data-url="https://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/" data-id="ckelhsfhn0004dyhnrft9a8k8" class="article-share-link">Share</a>
       
-        <a href="http://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="https://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azure/">Azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Data-Science/">Data Science</a></li></ul>
@@ -223,11 +216,11 @@ It can scale up and down in a few secon">
     
 <nav id="article-nav">
   
-    <a href="/2015/12/02/different-flavors-of-hadoop/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/12/02/mapr-on-azure/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Different Flavors of Hadoop &amp; Spark
+          MapR on Azure
         
       </div>
     </a>
@@ -279,7 +272,7 @@ It can scale up and down in a few secon">
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li></ul>
     </div>
   </div>
 
@@ -290,6 +283,10 @@ It can scale up and down in a few secon">
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/09/02/docker-volumes-in-codespace/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2016/12/12/Sample_Flink_Code/">Sample Flink Code That Reads From Kafka and Writes to Cassandra</a>
@@ -307,10 +304,6 @@ It can scale up and down in a few secon">
             <a href="/2015/12/18/azure_ml_remove_label_from_web_service/">Azure ML, Remove Label From Web Service</a>
           </li>
         
-          <li>
-            <a href="/2015/12/02/mapr-on-azure/">MapR on Azure</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -323,7 +316,7 @@ It can scale up and down in a few secon">
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2016 Benjamin Guinebertière<br>
+      &copy; 2020 Benjamin Guinebertière<br>
     </div>
   </div>
 </footer>
@@ -339,7 +332,7 @@ It can scale up and down in a few secon">
 <script>
   var disqus_shortname = 'benjguin-blog34';
   
-  var disqus_url = 'http://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/';
+  var disqus_url = 'https://blog.3-4.fr/2015/11/27/sqldw-azureml-jupyter-powerbi/';
   
   (function(){
     var dsq = document.createElement('script');
