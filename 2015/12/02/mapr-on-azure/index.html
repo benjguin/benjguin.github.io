@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <title>MapR on Azure | Benjamin Guinebertière&#39;s blog (@benjguin)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="IntroductionThere are different ways to install Hadoop on Azure. The blog post about the different flavors of Hadoop will provide more context. This blog post shows the main steps to start with MapR o">
-<meta name="keywords" content="Azure,Big Data,Hadoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MapR on Azure">
 <meta property="og:url" content="https://blog.3-4.fr/2015/12/02/mapr-on-azure/index.html">
 <meta property="og:site_name" content="Benjamin Guinebertière&#39;s blog (@benjguin)">
 <meta property="og:description" content="IntroductionThere are different ways to install Hadoop on Azure. The blog post about the different flavors of Hadoop will provide more context. This blog post shows the main steps to start with MapR o">
-<meta property="og:locale" content="default">
+<meta property="og:locale">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202b/1.png">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202b/2.png">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202b/3.png">
@@ -34,10 +33,13 @@
 <meta property="og:image" content="https://blog.3-4.fr/images/151202b/18.png">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202b/19.png">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202b/20.png">
-<meta property="og:updated_time" content="2020-09-02T14:44:44.408Z">
+<meta property="article:published_time" content="2015-12-02T00:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-02T15:41:43.061Z">
+<meta property="article:author" content="Benjamin Guinebertière">
+<meta property="article:tag" content="Azure">
+<meta property="article:tag" content="Big Data">
+<meta property="article:tag" content="Hadoop">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MapR on Azure">
-<meta name="twitter:description" content="IntroductionThere are different ways to install Hadoop on Azure. The blog post about the different flavors of Hadoop will provide more context. This blog post shows the main steps to start with MapR o">
 <meta name="twitter:image" content="https://blog.3-4.fr/images/151202b/1.png">
   
     <link rel="icon" href="/favicon.png">
@@ -45,10 +47,12 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
-  <script type="text/javascript" src="/js/tag.js"></script>
-</head>
-</html>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script type='text/javascript' src='/js/tag.js'></script>
+<meta name="generator" content="Hexo 5.1.1"></head>
+
 <body>
   <div id="container">
     <div id="wrap">
@@ -104,58 +108,58 @@
       
         <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>There are different ways to install Hadoop on Azure. The blog post about the <a href="/2015/12/02a/different-flavors-of-hadoop.html">different flavors of Hadoop</a> will provide more context.</p>
 <p>This blog post shows the main steps to start with MapR on Azure. </p>
-<h2 id="How-to"><a href="#How-to" class="headerlink" title="How to"></a>How to</h2><p>In order to install the cluster, follow the wizzard that you’ll find in <a href="https://portal.azure.com" target="_blank" rel="noopener">Azure portal</a>.</p>
+<h2 id="How-to"><a href="#How-to" class="headerlink" title="How to"></a>How to</h2><p>In order to install the cluster, follow the wizzard that you’ll find in <a target="_blank" rel="noopener" href="https://portal.azure.com/">Azure portal</a>.</p>
 <p>Here is a quick view of this wizzard: </p>
-<p><img src="/images/151202b/1.png" alt></p>
-<p><img src="/images/151202b/2.png" alt></p>
-<p><img src="/images/151202b/3.png" alt></p>
-<p><img src="/images/151202b/4.png" alt></p>
-<p><img src="/images/151202b/4b.png" alt></p>
-<p>Step 3 gives you a chance to download the generated Azure resource manager wizzard that you can modify and deploy as described in the following article: <a href="https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/" target="_blank" rel="noopener">Deploy an application with Azure Resource Manager template</a>.</p>
-<p><img src="/images/151202b/5.png" alt></p>
-<p>Once you’ve created the cluster, go to <code>https://{yourclustername}-node0.{install-location}.cloudapp.azure.com:9443</code> and connect.</p>
+<p><img src="/images/151202b/1.png"></p>
+<p><img src="/images/151202b/2.png"></p>
+<p><img src="/images/151202b/3.png"></p>
+<p><img src="/images/151202b/4.png"></p>
+<p><img src="/images/151202b/4b.png"></p>
+<p>Step 3 gives you a chance to download the generated Azure resource manager wizzard that you can modify and deploy as described in the following article: <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/">Deploy an application with Azure Resource Manager template</a>.</p>
+<p><img src="/images/151202b/5.png"></p>
+<p>Once you’ve created the cluster, go to <code>https://&#123;yourclustername&#125;-node0.&#123;install-location&#125;.cloudapp.azure.com:9443</code> and connect.</p>
 <p>In my case, I named the cluster <code>mapr34</code> and installed it in North Europe region, so it is <code>https://mapr34-node0.northeurope.cloudapp.azure.com:9443</code>.</p>
 <p>NB: this <code>mapr34-node0.northeurope.cloudapp.azure.com</code>host name can be found in the portal when you browse the resource group where the cluster is. It’s attached to the public IP of the node.</p>
-<p><img src="/images/151202b/6.png" alt></p>
+<p><img src="/images/151202b/6.png"></p>
 <p>Use mapr as the username and the password you provided in step 2 of the wizzard as the password.</p>
-<p><img src="/images/151202b/7.png" alt></p>
+<p><img src="/images/151202b/7.png"></p>
 <p>Select each node and check the disks where you want to install the distributed file system.<br>/dev/sdb1 is the cache disk. The 1023 GB disks are VHDs.</p>
 <p>Use the Next button to move on </p>
-<p><img src="/images/151202b/8.png" alt></p>
+<p><img src="/images/151202b/8.png"></p>
 <p>Click <code>Install -&gt;</code> to start the installation process.</p>
-<p><img src="/images/151202b/9.png" alt></p>
-<p><img src="/images/151202b/10.png" alt></p>
+<p><img src="/images/151202b/9.png"></p>
+<p><img src="/images/151202b/10.png"></p>
 <p>After a number of minutes, the installation completes. </p>
-<p><img src="/images/151202b/11.png" alt></p>
-<p><img src="/images/151202b/12.png" alt></p>
+<p><img src="/images/151202b/11.png"></p>
+<p><img src="/images/151202b/12.png"></p>
 <p>On the final step, you can find a link to a short name. Unless you’ve created an SSH tunnel to your cluster, you may need to use the long name instead. In this example where my cluster is called <code>mapr34</code> and is installed in North Europe, the URL is <code>https://mapr34node1:8443/</code>. I replace it by <code>https://mapr34-node1.northeurope.cloudapp.azure.com:8443</code>. </p>
 <p>NB: this <code>mapr34-node1.northeurope.cloudapp.azure.com</code>host name can be found in the portal when you browse the resource group where the cluster is. It’s attached to the public IP of the node. </p>
-<p><img src="/images/151202b/13.png" alt></p>
+<p><img src="/images/151202b/13.png"></p>
 <p>ypou connect with the same credentials as before: mapr/{the password you provided in step 2 of the creation wizzard}.</p>
-<p><img src="/images/151202b/14.png" alt></p>
+<p><img src="/images/151202b/14.png"></p>
 <p>Now that the MapR file system is installed. Let’s see it as HDFS. Let’s also check if we can access Azure blob storage.</p>
-<p><img src="/images/151202b/15.png" alt></p>
+<p><img src="/images/151202b/15.png"></p>
 <p>The <code>wasb</code> driver (wasb stands for Windows Azure Storage Blob) is not installed by default :-( .  </p>
-<p><img src="/images/151202b/16.png" alt></p>
-<p><img src="/images/151202b/17.png" alt></p>
+<p><img src="/images/151202b/16.png"></p>
+<p><img src="/images/151202b/17.png"></p>
 <p>If you go back to the installation page you’ll have the option to install additional services: </p>
-<p><img src="/images/151202b/18.png" alt></p>
-<p>When you’re done, you can stop the services, before shutting down the Azure virtual machines. If there are many nodes, you may want to use Azure PowerShell module or Azure Command Line Interface (Azure CLI). You can find them in the resources section of <a href="http://azure.com" target="_blank" rel="noopener">azure.com</a>. </p>
-<p><img src="/images/151202b/19.png" alt></p>
+<p><img src="/images/151202b/18.png"></p>
+<p>When you’re done, you can stop the services, before shutting down the Azure virtual machines. If there are many nodes, you may want to use Azure PowerShell module or Azure Command Line Interface (Azure CLI). You can find them in the resources section of <a target="_blank" rel="noopener" href="http://azure.com/">azure.com</a>. </p>
+<p><img src="/images/151202b/19.png"></p>
 <p>You may also prefer to remove all the resources that consitute the cluster: VMs, storage, vNet and so on. Of course, all the data will be removed as well, so you are asked to type the resource group before deleting it.</p>
-<p><img src="/images/151202b/20.png" alt></p>
+<p><img src="/images/151202b/20.png"></p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We saw how to create a MapR cluster in Azure. You just have to enter a few parameters in friendly Web interfaces and wait for the cloud and MapR to create everything for you!</p>
-<p>:-)<br>Benjamin (<a href="http://twitter.com/@benjguin" target="_blank" rel="noopener">@benjguin</a>)</p>
+<p>:-)<br>Benjamin (<a target="_blank" rel="noopener" href="http://twitter.com/@benjguin">@benjguin</a>)</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://blog.3-4.fr/2015/12/02/mapr-on-azure/" data-id="ckelhsfib001bdyhnshsn8cfw" class="article-share-link">Share</a>
+      <a data-url="https://blog.3-4.fr/2015/12/02/mapr-on-azure/" data-id="ckeljtn730007fbhn327v3tx4" class="article-share-link">Share</a>
       
         <a href="https://blog.3-4.fr/2015/12/02/mapr-on-azure/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azure/">Azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azure/" rel="tag">Azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/" rel="tag">Big Data</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li></ul>
 
     </footer>
   </div>
@@ -186,7 +190,7 @@
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>
@@ -200,7 +204,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure-Machine-Learning/">Azure Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AzureFunctions/">AzureFunctions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Science/">Data Science</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sigfox/">Sigfox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/" rel="tag">Azure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure-Machine-Learning/" rel="tag">Azure Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AzureFunctions/" rel="tag">AzureFunctions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Big-Data/" rel="tag">Big Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/" rel="tag">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Science/" rel="tag">Data Science</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/" rel="tag">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sigfox/" rel="tag">Sigfox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
     </div>
   </div>
 
@@ -294,11 +298,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>

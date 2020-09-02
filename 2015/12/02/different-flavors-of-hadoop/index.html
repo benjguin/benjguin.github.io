@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <title>Different Flavors of Hadoop &amp; Spark | Benjamin Guinebertière&#39;s blog (@benjguin)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="There are four main ways to install Hadoop &amp;amp; Spark:   from Apache (http://hadoop.apache.org/releases.html)  from Cloudera’s distribution (http://www.cloudera.com) from HortonWorks’ distribution (h">
-<meta name="keywords" content="Azure,Big Data,Hadoop,Spark">
+  <meta name="description" content="There are four main ways to install Hadoop &amp; Spark:   from Apache (http:&#x2F;&#x2F;hadoop.apache.org&#x2F;releases.html)  from Cloudera’s distribution (http:&#x2F;&#x2F;www.cloudera.com) from HortonWorks’ distribution (h">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Different Flavors of Hadoop &amp; Spark">
 <meta property="og:url" content="https://blog.3-4.fr/2015/12/02/different-flavors-of-hadoop/index.html">
 <meta property="og:site_name" content="Benjamin Guinebertière&#39;s blog (@benjguin)">
-<meta property="og:description" content="There are four main ways to install Hadoop &amp;amp; Spark:   from Apache (http://hadoop.apache.org/releases.html)  from Cloudera’s distribution (http://www.cloudera.com) from HortonWorks’ distribution (h">
-<meta property="og:locale" content="default">
+<meta property="og:description" content="There are four main ways to install Hadoop &amp; Spark:   from Apache (http:&#x2F;&#x2F;hadoop.apache.org&#x2F;releases.html)  from Cloudera’s distribution (http:&#x2F;&#x2F;www.cloudera.com) from HortonWorks’ distribution (h">
+<meta property="og:locale">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202a/2.png">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202a/3.png">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202a/4.png">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202a/1.png">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202a/5.png">
 <meta property="og:image" content="https://blog.3-4.fr/images/151202a/6.png">
-<meta property="og:updated_time" content="2020-09-02T14:44:44.408Z">
+<meta property="article:published_time" content="2015-12-02T00:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-02T15:41:43.061Z">
+<meta property="article:author" content="Benjamin Guinebertière">
+<meta property="article:tag" content="Azure">
+<meta property="article:tag" content="Big Data">
+<meta property="article:tag" content="Hadoop">
+<meta property="article:tag" content="Spark">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Different Flavors of Hadoop &amp; Spark">
-<meta name="twitter:description" content="There are four main ways to install Hadoop &amp;amp; Spark:   from Apache (http://hadoop.apache.org/releases.html)  from Cloudera’s distribution (http://www.cloudera.com) from HortonWorks’ distribution (h">
 <meta name="twitter:image" content="https://blog.3-4.fr/images/151202a/2.png">
   
     <link rel="icon" href="/favicon.png">
@@ -30,10 +33,12 @@
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/css/style.css">
-  <script type="text/javascript" src="/js/tag.js"></script>
-</head>
-</html>
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script type='text/javascript' src='/js/tag.js'></script>
+<meta name="generator" content="Hexo 5.1.1"></head>
+
 <body>
   <div id="container">
     <div id="wrap">
@@ -89,101 +94,64 @@
       
         <p>There are four main ways to install Hadoop &amp; Spark: </p>
 <ul>
-<li>from Apache (<a href="http://hadoop.apache.org/releases.html" target="_blank" rel="noopener">http://hadoop.apache.org/releases.html</a>) </li>
-<li>from Cloudera’s distribution (<a href="http://www.cloudera.com" target="_blank" rel="noopener">http://www.cloudera.com</a>)</li>
-<li>from HortonWorks’ distribution (<a href="http://hortonworks.com" target="_blank" rel="noopener">http://hortonworks.com</a>)</li>
-<li>from MapR’s distribution (<a href="http://mapr.com" target="_blank" rel="noopener">http://mapr.com</a>)</li>
+<li>from Apache (<a target="_blank" rel="noopener" href="http://hadoop.apache.org/releases.html">http://hadoop.apache.org/releases.html</a>) </li>
+<li>from Cloudera’s distribution (<a target="_blank" rel="noopener" href="http://www.cloudera.com/">http://www.cloudera.com</a>)</li>
+<li>from HortonWorks’ distribution (<a target="_blank" rel="noopener" href="http://hortonworks.com/">http://hortonworks.com</a>)</li>
+<li>from MapR’s distribution (<a target="_blank" rel="noopener" href="http://mapr.com/">http://mapr.com</a>)</li>
 </ul>
 <p>This blog post shows the different options in the context of Azure.</p>
-<h2 id="From-Apache-http-hadoop-apache-org-releases-html"><a href="#From-Apache-http-hadoop-apache-org-releases-html" class="headerlink" title="From Apache (http://hadoop.apache.org/releases.html)"></a>From Apache (<a href="http://hadoop.apache.org/releases.html" target="_blank" rel="noopener">http://hadoop.apache.org/releases.html</a>)</h2><p>This option is chosen by people who want to select the components themselves, and want to get the releases as soon as they are available.  </p>
-<p>If you want that option, it’s probably because your want to have control, rather than using a cluster somebody tailored for you.<br>The recommended way to do in Azure is to use Azure Virtual Machines, virtual network, and install everything yourself.<br>For that, you may want to leverage <a href="https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/" target="_blank" rel="noopener">Azure Resource Manager templates</a>. A number of examples are available on <a href="https://github.com/Azure/azure-quickstart-template" target="_blank" rel="noopener">GitHub</a>. For instance, <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/zookeeper-cluster-ubuntu-vm" target="_blank" rel="noopener">this one</a> deploys a Zookeeper cluster on Ubuntu VMs.</p>
+<h2 id="From-Apache-http-hadoop-apache-org-releases-html"><a href="#From-Apache-http-hadoop-apache-org-releases-html" class="headerlink" title="From Apache (http://hadoop.apache.org/releases.html)"></a>From Apache (<a target="_blank" rel="noopener" href="http://hadoop.apache.org/releases.html">http://hadoop.apache.org/releases.html</a>)</h2><p>This option is chosen by people who want to select the components themselves, and want to get the releases as soon as they are available.  </p>
+<p>If you want that option, it’s probably because your want to have control, rather than using a cluster somebody tailored for you.<br>The recommended way to do in Azure is to use Azure Virtual Machines, virtual network, and install everything yourself.<br>For that, you may want to leverage <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/documentation/articles/resource-group-authoring-templates/">Azure Resource Manager templates</a>. A number of examples are available on <a target="_blank" rel="noopener" href="https://github.com/Azure/azure-quickstart-template">GitHub</a>. For instance, <a target="_blank" rel="noopener" href="https://github.com/Azure/azure-quickstart-templates/tree/master/zookeeper-cluster-ubuntu-vm">this one</a> deploys a Zookeeper cluster on Ubuntu VMs.</p>
 <h2 id="Hadoop-architecture-on-Azure"><a href="#Hadoop-architecture-on-Azure" class="headerlink" title="Hadoop architecture on Azure"></a>Hadoop architecture on Azure</h2><p>There are several ways to deploy a Hadoop cluster on Azure, and several ways to store the data.<br>A virtual machine on Azure has </p>
 <ul>
 <li>local disk which is mainly used for cache (Cache disk), </li>
 <li>Virtual Hard Disks (VHD) that live in the Azure storage; in particular, this is the case of the OS disk (the only exception is with web and worker roles)</li>
 <li>the virtual machine can also access blob storage which is a storage service where one can put files. It is accessible thru REST API, but also thru the wasb (Windows Azure Storage Blob) driver which is available in Hadoop.</li>
 </ul>
-<p><img src="/images/151202a/2.png" alt></p>
+<p><img src="/images/151202a/2.png"></p>
 <p>Data Lake Store is also a new way of storing big data. For now (NOV 2015) it is in preview and can be used from Data Lake Analytics and HDInsight; later on, it will also be usable from standard distributions:</p>
-<p><img src="/images/151202a/3.png" alt></p>
-<h3 id="Comparing-Cloudera-Hortonworks-and-MapR"><a href="#Comparing-Cloudera-Hortonworks-and-MapR" class="headerlink" title="Comparing Cloudera, Hortonworks and MapR"></a>Comparing Cloudera, Hortonworks and MapR</h3><p><a href="https://www.bing.com/search?q=hortonworks+and+cloudera+and+mapr" target="_blank" rel="noopener">Many articles</a> have been written on how the distributions compare.</p>
+<p><img src="/images/151202a/3.png"></p>
+<h3 id="Comparing-Cloudera-Hortonworks-and-MapR"><a href="#Comparing-Cloudera-Hortonworks-and-MapR" class="headerlink" title="Comparing Cloudera, Hortonworks and MapR"></a>Comparing Cloudera, Hortonworks and MapR</h3><p><a target="_blank" rel="noopener" href="https://www.bing.com/search?q=hortonworks+and+cloudera+and+mapr">Many articles</a> have been written on how the distributions compare.</p>
 <p>Here is how I see them.</p>
-<p><strong>Hortonworks</strong> is the closest to the Apache Hadoop distribution; All their code is Apache’s code and 100% open source. Hortonworks Data Platform (HDP) is described <a href="http://hortonworks.com/hdp/whats-new/" target="_blank" rel="noopener">here</a>.</p>
-<p><strong>Cloudera</strong> is the mots popular; in particular, users like <a href="http://www.cloudera.com/content/www/en-us/products/apache-hadoop/impala.html" target="_blank" rel="noopener">Impala</a> and <a href="http://www.cloudera.com/content/www/en-us/products/cloudera-manager.html" target="_blank" rel="noopener">Cloudera Manager</a>. Their code is 100% open source, but not 100% Apache code (yet?). They recently decided to donate Impala and Kudu to the Apache Software Foundation.</p>
-<p><strong>MapR</strong> builds a distribution for business critical production applications; they are well known for their MapR file system (MapR-FS) which can be viewed as HDFS (Hadoop Distributed File System) and NFS (Network File System), and has the reputation of being fast. Mapr-FS is proprietary. The distribution is described <a href="https://www.mapr.com/products/mapr-distribution-including-apache-hadoop" target="_blank" rel="noopener">here</a>.</p>
+<p><strong>Hortonworks</strong> is the closest to the Apache Hadoop distribution; All their code is Apache’s code and 100% open source. Hortonworks Data Platform (HDP) is described <a target="_blank" rel="noopener" href="http://hortonworks.com/hdp/whats-new/">here</a>.</p>
+<p><strong>Cloudera</strong> is the mots popular; in particular, users like <a target="_blank" rel="noopener" href="http://www.cloudera.com/content/www/en-us/products/apache-hadoop/impala.html">Impala</a> and <a target="_blank" rel="noopener" href="http://www.cloudera.com/content/www/en-us/products/cloudera-manager.html">Cloudera Manager</a>. Their code is 100% open source, but not 100% Apache code (yet?). They recently decided to donate Impala and Kudu to the Apache Software Foundation.</p>
+<p><strong>MapR</strong> builds a distribution for business critical production applications; they are well known for their MapR file system (MapR-FS) which can be viewed as HDFS (Hadoop Distributed File System) and NFS (Network File System), and has the reputation of being fast. Mapr-FS is proprietary. The distribution is described <a target="_blank" rel="noopener" href="https://www.mapr.com/products/mapr-distribution-including-apache-hadoop">here</a>.</p>
 <p>Anyway, the best solution is the one you chose!</p>
 <p>Here is how those distribution leverage Azure. They have different approaches.</p>
-<table>
-<thead>
-<tr>
-<th>Distribution</th>
-<th>uses Cache Disk</th>
-<th>uses VHD</th>
-<th>uses blobs</th>
-<th>prices</th>
-<th>options</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Cloudera</td>
-<td>Yes</td>
-<td>Yes, premium storage only</td>
-<td>for cold archive only</td>
-<td>high only because Cloudera supports only high end performances</td>
-<td>Cluster, single VM</td>
-</tr>
-<tr>
-<td>Hortonworks</td>
-<td>not by default (HDFS)</td>
-<td>Yes (HDFS)</td>
-<td>Yes</td>
-<td>low to high</td>
-<td>Cluster, single VM, Hadoop as a service (HDInsight)</td>
-</tr>
-<tr>
-<td>MapR</td>
-<td>Yes (Mapr-FS)</td>
-<td>Yes (Mapr-FS)</td>
-<td>No. wasb driver is not installed</td>
-<td>low to high</td>
-<td>Cluster</td>
-</tr>
-</tbody>
-</table>
+<p>Distribution|uses Cache Disk|uses VHD|uses blobs|prices|options<br>——-|—–|—–|—–<br>Cloudera|Yes|Yes, premium storage only|for cold archive only|high only because Cloudera supports only high end performances|Cluster, single VM<br>Hortonworks|not by default (HDFS)|Yes (HDFS)|Yes|low to high|Cluster, single VM, Hadoop as a service (HDInsight)<br>MapR|Yes (Mapr-FS)|Yes (Mapr-FS)|No. wasb driver is not installed|low to high|Cluster</p>
 <p>NB: the options mentioned above are automated ones. Of course, you can leverage Azure virtual machines and virtual networks to install any distribution you like on a single VM or on a cluster. </p>
 <p>The fact that Cloudera only supports blob storage as a cold archive makes it more difficult to create different clusters on the same storage. It also requires that you save the data to blob storage explicitely before shutting down if you need to access the data while the cluster is off.</p>
 <p>With MapR, as you don’t have the wasb driver, it is difficult to make the data available while the cluster is shut down.</p>
 <p>With Hortonworks, you can use Azure blob storage as the default distributed file system. With that, you can start the cluster only when you need compute power. The rest of the time, you can bring data to the storage thru REST API, or SDKs in different languages. When you need compute, you can create a cluster that has the required size. You loose collocality (which is mainly important in the first map phase, before shuffle), but you win a lot of flexibility. </p>
 <p>I hope that MapR and Cloudera will enhance their usage of cloud storage with Azure Data Lake Store. Azure Data Lake should meet the performance requirements of Cloudera so that they don’t use it only for cold archive. I’m quite confident that Hortonworks will add Azure Data Lake driver. This is already the case with HDInsight. </p>
 <p>Let now see how you can deploy those distributions on Azure.</p>
-<h3 id="Cloudera-http-www-cloudera-com"><a href="#Cloudera-http-www-cloudera-com" class="headerlink" title="Cloudera (http://www.cloudera.com)"></a>Cloudera (<a href="http://www.cloudera.com" target="_blank" rel="noopener">http://www.cloudera.com</a>)</h3><p>There are different options. This <a href="http://www.cloudera.com/content/dam/cloudera/Resources/PDF/Datasheet/datasheet-cloudera-enterprise.pdf" target="_blank" rel="noopener">page</a> from Cloudera’s web site show the different available distributions. From Azure marketplace, you can find the following (as of 2 DEC 2015):</p>
-<p><img src="/images/151202a/4.png" alt></p>
-<p>An automated way of deploying a <strong>Cloudera Enterprise Data Hub cluster</strong> <a href="https://azure.microsoft.com/en-us/marketplace/partners/cloudera/clouderaedhcloudera/" target="_blank" rel="noopener">has been made available by Cloudera on Azure</a>. </p>
-<p><img src="/images/151202a/1.png" alt></p>
-<p>You’ll find a <a href="https://azure.microsoft.com/en-us/blog/full-cloudera-enterprise-edh-support-on-azure/" target="_blank" rel="noopener">blog post</a> on how to deploy it on the Azure web site. Also make sure to read the last paragraph (Cloudera Enterprise Deployment from GitHub) which explains there is also a <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/cloudera-on-centos" target="_blank" rel="noopener">template on GitHub</a> if you need more flexibility.</p>
-<p>If you prefer to install <strong>a single VM</strong>, you can use the Cloudera-Centos-6.6 offer. Its documentation is available at <a href="https://azure.microsoft.com/en-us/marketplace/partners/cloudera/cloudera-centos-6/" target="_blank" rel="noopener">azure.microsoft.com/en-us/marketplace/partners/cloudera/cloudera-centos-6/</a>.</p>
-<h3 id="HortonWorks-http-hortonworks-com"><a href="#HortonWorks-http-hortonworks-com" class="headerlink" title="HortonWorks (http://hortonworks.com)"></a>HortonWorks (<a href="http://hortonworks.com" target="_blank" rel="noopener">http://hortonworks.com</a>)</h3><p>In order to install <strong>Hadoop as a service</strong> with an Hadoop Data Platform, you can leverage HDInsight on Windows or Linux nodes. Documentation is available at <a href="https://azure.microsoft.com/en-us/documentation/services/hdinsight/" target="_blank" rel="noopener">azure.microsoft.com/en-us/documentation/services/hdinsight/</a>.</p>
+<h3 id="Cloudera-http-www-cloudera-com"><a href="#Cloudera-http-www-cloudera-com" class="headerlink" title="Cloudera (http://www.cloudera.com)"></a>Cloudera (<a target="_blank" rel="noopener" href="http://www.cloudera.com/">http://www.cloudera.com</a>)</h3><p>There are different options. This <a target="_blank" rel="noopener" href="http://www.cloudera.com/content/dam/cloudera/Resources/PDF/Datasheet/datasheet-cloudera-enterprise.pdf">page</a> from Cloudera’s web site show the different available distributions. From Azure marketplace, you can find the following (as of 2 DEC 2015):</p>
+<p><img src="/images/151202a/4.png"></p>
+<p>An automated way of deploying a <strong>Cloudera Enterprise Data Hub cluster</strong> <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/marketplace/partners/cloudera/clouderaedhcloudera/">has been made available by Cloudera on Azure</a>. </p>
+<p><img src="/images/151202a/1.png"></p>
+<p>You’ll find a <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/blog/full-cloudera-enterprise-edh-support-on-azure/">blog post</a> on how to deploy it on the Azure web site. Also make sure to read the last paragraph (Cloudera Enterprise Deployment from GitHub) which explains there is also a <a target="_blank" rel="noopener" href="https://github.com/Azure/azure-quickstart-templates/tree/master/cloudera-on-centos">template on GitHub</a> if you need more flexibility.</p>
+<p>If you prefer to install <strong>a single VM</strong>, you can use the Cloudera-Centos-6.6 offer. Its documentation is available at <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/marketplace/partners/cloudera/cloudera-centos-6/">azure.microsoft.com/en-us/marketplace/partners/cloudera/cloudera-centos-6/</a>.</p>
+<h3 id="HortonWorks-http-hortonworks-com"><a href="#HortonWorks-http-hortonworks-com" class="headerlink" title="HortonWorks (http://hortonworks.com)"></a>HortonWorks (<a target="_blank" rel="noopener" href="http://hortonworks.com/">http://hortonworks.com</a>)</h3><p>In order to install <strong>Hadoop as a service</strong> with an Hadoop Data Platform, you can leverage HDInsight on Windows or Linux nodes. Documentation is available at <a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/documentation/services/hdinsight/">azure.microsoft.com/en-us/documentation/services/hdinsight/</a>.</p>
 <p>Besides HDInsight, the marketplace has other options: </p>
-<p><img src="/images/151202a/5.png" alt></p>
-<p>In order to install an <strong>HDP cluster</strong>, you can leverage the wizzard. Note that as of today (2 DEC 2015), the wizzard deploys HDP 2.1, while latest version of HDP is 2.3. An updated version of this wizzard should be made available in the coming weeks, hopefully. If you want to have an early look at this, I think this is on Github: <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/hortonworks-on-centos" target="_blank" rel="noopener">github.com/Azure/azure-quickstart-templates/tree/master/hortonworks-on-centos</a>.</p>
-<p>If you want to install <strong>a single VM</strong>, a sandbox is available. If you can read French or if you know how to have the page translated for you, you are welcome to read my previous post: <a href="http://blogs.msdn.com/b/benjguin/archive/2015/11/16/hadoop-comment-r-233-duire-ses-co-251-ts-hdinsight-pour-le-d-233-veloppement.aspx" target="_blank" rel="noopener">Hadoop : Comment réduire ses coûts HDInsight pour le développement</a></p>
-<h3 id="MapR-http-mapr-com"><a href="#MapR-http-mapr-com" class="headerlink" title="MapR (http://mapr.com)"></a>MapR (<a href="http://mapr.com" target="_blank" rel="noopener">http://mapr.com</a>)</h3><p>MapR is also available on the Azure marketplace: </p>
-<p><img src="/images/151202a/6.png" alt></p>
+<p><img src="/images/151202a/5.png"></p>
+<p>In order to install an <strong>HDP cluster</strong>, you can leverage the wizzard. Note that as of today (2 DEC 2015), the wizzard deploys HDP 2.1, while latest version of HDP is 2.3. An updated version of this wizzard should be made available in the coming weeks, hopefully. If you want to have an early look at this, I think this is on Github: <a target="_blank" rel="noopener" href="https://github.com/Azure/azure-quickstart-templates/tree/master/hortonworks-on-centos">github.com/Azure/azure-quickstart-templates/tree/master/hortonworks-on-centos</a>.</p>
+<p>If you want to install <strong>a single VM</strong>, a sandbox is available. If you can read French or if you know how to have the page translated for you, you are welcome to read my previous post: <a target="_blank" rel="noopener" href="http://blogs.msdn.com/b/benjguin/archive/2015/11/16/hadoop-comment-r-233-duire-ses-co-251-ts-hdinsight-pour-le-d-233-veloppement.aspx">Hadoop : Comment réduire ses coûts HDInsight pour le développement</a></p>
+<h3 id="MapR-http-mapr-com"><a href="#MapR-http-mapr-com" class="headerlink" title="MapR (http://mapr.com)"></a>MapR (<a target="_blank" rel="noopener" href="http://mapr.com/">http://mapr.com</a>)</h3><p>MapR is also available on the Azure marketplace: </p>
+<p><img src="/images/151202a/6.png"></p>
 <p>In order to install the cluster, please see <a href="/2015/12/02b/mapr-on-azure.html">this blog post</a></p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>We saw that there are a number of options to install Hadoop on Azure. </p>
 <p>Want to comment? I’m sorry, I didn’t leverage a tool like Disqus yet on this blog. Please feel free to e-mail me at my twitter alias at microsoft dot com and I’ll include your remarks in the body of this post. </p>
-<p>:-)<br>Benjamin (<a href="http://twitter.com/@benjguin" target="_blank" rel="noopener">@benjguin</a>) </p>
+<p>:-)<br>Benjamin (<a target="_blank" rel="noopener" href="http://twitter.com/@benjguin">@benjguin</a>) </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://blog.3-4.fr/2015/12/02/different-flavors-of-hadoop/" data-id="ckelhsfhq0006dyhnd538eibm" class="article-share-link">Share</a>
+      <a data-url="https://blog.3-4.fr/2015/12/02/different-flavors-of-hadoop/" data-id="ckeljtn710006fbhn65khhdqh" class="article-share-link">Share</a>
       
         <a href="https://blog.3-4.fr/2015/12/02/different-flavors-of-hadoop/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azure/">Azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Azure/" rel="tag">Azure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Big-Data/" rel="tag">Big Data</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li></ul>
 
     </footer>
   </div>
@@ -214,7 +182,7 @@
 
 <section id="comments">
   <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
 </section>
 </section>
@@ -228,7 +196,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/">Azure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure-Machine-Learning/">Azure Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AzureFunctions/">AzureFunctions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Big-Data/">Big Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Science/">Data Science</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sigfox/">Sigfox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/" rel="tag">Azure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure-Machine-Learning/" rel="tag">Azure Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AzureFunctions/" rel="tag">AzureFunctions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Big-Data/" rel="tag">Big Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/" rel="tag">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Science/" rel="tag">Data Science</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/" rel="tag">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sigfox/" rel="tag">Sigfox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
     </div>
   </div>
 
@@ -322,11 +290,17 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
 
 
 <script src="/js/script.js"></script>
+
 
   </div>
 </body>
