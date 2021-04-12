@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Benjamin Guinebertière&#39;s blog (@benjguin)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Why you might want to have an end to end walkthrough document in your repoAs we are wrapping up an engagement where we’ve been coding with engineers and data scientists in a TelCo company,we are shari">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Benjamin Guinebertière&#39;s blog (@benjguin)">
+<meta property="og:url" content="https://blog.3-4.fr/2021/04/12/end-to-end-walkthrough/index.html">
+<meta property="og:site_name" content="Benjamin Guinebertière&#39;s blog (@benjguin)">
+<meta property="og:description" content="Why you might want to have an end to end walkthrough document in your repoAs we are wrapping up an engagement where we’ve been coding with engineers and data scientists in a TelCo company,we are shari">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-04-12T12:52:13.343Z">
+<meta property="article:modified_time" content="2021-04-12T12:52:13.343Z">
+<meta property="article:author" content="Benjamin Guinebertière">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script type='text/javascript' src='/js/tag.js'></script>
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Benjamin Guinebertière&#39;s blog (@benjguin)</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.3-4.fr"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2021/04/12/end-to-end-walkthrough" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/12/end-to-end-walkthrough/" class="article-date">
+  <time datetime="2021-04-12T12:52:13.343Z" itemprop="datePublished">2021-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Why-you-might-want-to-have-an-end-to-end-walkthrough-document-in-your-repo"><a href="#Why-you-might-want-to-have-an-end-to-end-walkthrough-document-in-your-repo" class="headerlink" title="Why you might want to have an end to end walkthrough document in your repo"></a>Why you might want to have an end to end walkthrough document in your repo</h1><p>As we are wrapping up an engagement where we’ve been coding with engineers and data scientists in a TelCo company,<br>we are sharing some of the learnings from this engagement.</p>
+<p>That’s part of our team’s mission: We code with high impact organization developers to bootstrap the projects they’ll bring to production in Azure and pave the way for others.</p>
+<p>You’ll learn more from the same engagement at <a target="_blank" rel="noopener" href="https://aka.ms/hat-sharing">https://aka.ms/hat-sharing</a></p>
+<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p>In the engagement we were a larger team than usual. Customer had 7 developers and data scientists, 1 subject matter expert. MS brought 1 Business PM, 1 Technical PM, 1 Dev lead, 1 Data Science Lead, 2 Tech Leads (I was one of the two), 7 developers, and 2 data scientists.</p>
+<p>That’s definitely more than a pizza team! (Well, we were working from home, so each team member could order a pizza for themselves and nobody starved anyway…)</p>
+<p>Because the team was large we split the team based on the epics we had in the backlog. A small team of ~3 would take an epic and take ownership from design to implementation. An epic would be about data transformation pipeline, another one about data science pipeline, another one about clustering, etc. There were also cross epic design meetings.</p>
+<p>An additional piece of context is that <a target="_blank" rel="noopener" href="https://github.com/microsoft/code-with-engineering-playbook/blob/master/CSE.md">Microsoft CSE (Commercial Software Engineering)</a> codes with customers. The customer team is the catcher, they move on after we leave. If we didnt come to that point when we leave, they are the ones bringing the project to production. So it’s important the code we leave is cristal clear for the catcher team.</p>
+<h2 id="Impediments"><a href="#Impediments" class="headerlink" title="Impediments"></a>Impediments</h2><p>We had two important obstacles while running the engagement:</p>
+<ol>
+<li>Data needs evolved and the datasets we had became partially obsolete. We didn’t get the right new datasets early enough. Because of that, parts of the project used small datasets (1 day) with the new schema, while other parts of the project stayed with medium datasets (few weeks) that allowed clustering to work.</li>
+<li>We didn’t get access to the target pre-production environment early enough. Because of that, we recreated a similar environment in our development Azure subscription, besides the development environment. Let’s call it the simulated target environment.</li>
+</ol>
+<p>Without us figuring out, the team started to progress in parallel streams that may not converge. There were unit tests, and plans to develop some integration tests. There was no clear target we could touch, no clear artifact you test, fix and enhance. There was only that mental picture each team member had on top of their mind; was the picture the same for each of us? Was the team still walking in the right and same direction?</p>
+<h2 id="Integration-tests-early-in-the-game"><a href="#Integration-tests-early-in-the-game" class="headerlink" title="Integration tests early in the game"></a>Integration tests early in the game</h2><p>It was time to put higher priority on and end to end integration test running in an Azure DevOps pipeline that everyone could see, touch, fix and enhance. It was also important to have this end to end integration test to make it more obvious when we had to switch datasets. For instance, data transformation pipeline used new raw datasets (with the new schema) to go to bronze, silver and gold datasets, but the gold dataset could not be used for clustering because there was only one day of data while a few weeks were needed. The data science pipeline used an old datasets that had enough data. We still included that in the end to end integration test because the main goal was to reflect what we had built so far, and have something to fix, not be content with different parts that individually worked well.</p>
+<p>If i had to run the same engagement again, I would have an integration tests Azure DevOps pipeline much earlier.</p>
+<h2 id="End-to-end-walkthrough-document"><a href="#End-to-end-walkthrough-document" class="headerlink" title="End to end walkthrough document"></a>End to end walkthrough document</h2><p>The end to end integration test pipeline didn’t reflect the work from the whole team. There were people working on the development environment itself, others working on data science enhancements (what would be the best clustering algorithm, how would you interpret the clusters, how to detect concept drifts), others on data visualization. All this was not part of the integration tests pipeline.</p>
+<p>We already had a lot of documentation in the repo (e.g. design documents written by the epics teams) but that still didn’t provide a quite concise yet holistic view of what was in the repo.</p>
+<p>Having an end to end walkthrough document is a way to have a sequential list of things to run, test and read to get up to speed on what the repo contains. Entering the code of a repo is hard. What if we could have a tutorial that walks a new team member through the code and explains how to run it?</p>
+<p>For the developers, as they write paragraphs in that document, it’s also a way to make it even more obvious how their work fits in the overall picture.</p>
+<p>The end to end walkthrough document has a broader scope than the integration tests. Its central piece is about running the integration tests pipeline and documenting what it does. Offloading most of the code to Azure DevOps pipelines makes it easier to maintain the document. That’s quite obvious for the integration tests but that also works for things like dataset exploration; instead of relying on the reader to use their development environment and run code to explore datasets, why not have that code in an Azure DevOps pipeline? That makes it much easier to check that the code is still up to date (just run the pipeline).</p>
+<p>So, what does such a document look like?</p>
+<p>Here is the table of content of the end to end walkthrough document for the hat engagement:</p>
+<ul>
+<li>Development environment (how to get sources, setup and run your dev container, check that everything works correctly for you)</li>
+<li>Explore datasets [1]</li>
+<li>Unit Tests (how to run the unit tests from the dev environment)</li>
+<li>End to end integration tests: data transformation pipeline, data science pipeline, concept drift detection pipeline, recommendation pipeline (how to run the Azure DevOps integration test pipeline and read the results)</li>
+<li>Execute Data Engineering and Data Science Pipelines (how to run CD Azure DevOps pipeline and run the Databricks jobs in the target environment)</li>
+<li>DataViz (how to see results in Power BI)</li>
+<li>Continuous Integration - CI (understand what the CI pipeline does)</li>
+<li>Continuous Deployment - CD (understand what the CD pipeline does)</li>
+<li>Data Science Experiments (how to run the data science notebooks) [2]</li>
+</ul>
+<p>[1] an Azure DevOps pipeline is associated to that part of the document. It allows to get datasets from the dev environment’s data lake and extract schema and a few rows to get a glance on how the dataset looks like without running an actual notebook. This cannot be seen directly from Azure Data Explorer as datasets would come in formats like ORC, CSV in tar.gz or parquet.</p>
+<p>[2] Data scientists worked in notebooks (experiment notebooks), then code was translated by developers into unit tested Python code + bootstrap notebooks. The experiment notebooks were stored in git in a separate folder.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>If I had to go back in time, I would have integration tests in an Azure DevOps pipeline much sooner and start the end to end walkthrough document very early also. Any important pull request that would bring new features would update both.</p>
+<p>I would also use parts of the end to end walktrhough document to have descriptions of what the code would do in the near future. That’s complementary to the backlog which is at a lower level of details.</p>
+<p><strong>Both the end to end walkthrough document and integration tests in an automated pipeline are a great target the whole development team can share, look at, touch, run, fix, enhance.</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.3-4.fr/2021/04/12/end-to-end-walkthrough/" data-id="cknelinyg0013a9lu9l8ag94d" class="article-share-link">Share</a>
+      
+        <a href="https://blog.3-4.fr/2021/04/12/end-to-end-walkthrough/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/09/02/docker-volumes-in-codespace/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/12/Sample_Flink_Code/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Sample Flink Code That Reads From Kafka and Writes to Cassandra</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure/" rel="tag">Azure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Azure-Machine-Learning/" rel="tag">Azure Machine Learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AzureFunctions/" rel="tag">AzureFunctions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Big-Data/" rel="tag">Big Data</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/" rel="tag">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Data-Science/" rel="tag">Data Science</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IoT/" rel="tag">IoT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sigfox/" rel="tag">Sigfox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Azure/" style="font-size: 20px;">Azure</a> <a href="/tags/Azure-Machine-Learning/" style="font-size: 10px;">Azure Machine Learning</a> <a href="/tags/AzureFunctions/" style="font-size: 10px;">AzureFunctions</a> <a href="/tags/Big-Data/" style="font-size: 16.67px;">Big Data</a> <a href="/tags/BigData/" style="font-size: 10px;">BigData</a> <a href="/tags/Data-Science/" style="font-size: 13.33px;">Data Science</a> <a href="/tags/Hadoop/" style="font-size: 13.33px;">Hadoop</a> <a href="/tags/IoT/" style="font-size: 13.33px;">IoT</a> <a href="/tags/Sigfox/" style="font-size: 10px;">Sigfox</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/02/docker-volumes-in-codespace/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/12/end-to-end-walkthrough/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/12/Sample_Flink_Code/">Sample Flink Code That Reads From Kafka and Writes to Cassandra</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/05/IOT_Hub_Azure_Functions_Sigfox/">Tutoriel - Synchronisation De Votre Application De Fonction Avec Le Concentrateur IoT Et Exemple De Connexion Avec Un Objet Sigfox</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/30/deploying_containers_to_one_or_several_VMs/">Deploying Containers to One or Several VMs</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Benjamin Guinebertière<br>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'benjguin-blog34';
+  
+  var disqus_url = 'https://blog.3-4.fr/2021/04/12/end-to-end-walkthrough/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  </div>
+</body>
+</html>
