@@ -1,4 +1,11 @@
-# How to share a volume with a specific docker container in Visual Studio Codespaces
+---
+title: How to share a volume with a specific docker container in Visual Studio Codespaces
+date: 2020-09-02
+tags: 
+- VisualStudioCode
+- Containers
+- DevEnv
+---
 
 Visual Studio Codespaces provides cloud-powered development environments for any activity - whether it's a long-term project, or a short-term task like reviewing a pull request
 

@@ -1,4 +1,10 @@
-# Why you might want to have an end to end walkthrough document in your repo
+---
+title: Why you might want to have an end to end walkthrough document in your repo
+date: 2021-04-12
+tags: 
+- DevOps
+- DevPractices
+---
 
 As we are wrapping up an engagement where we've been coding with engineers and data scientists in a TelCo company,
 we are sharing some of the learnings from this engagement.
